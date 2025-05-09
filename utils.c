@@ -42,3 +42,43 @@ void display_ascii_art(const char* art_name) {
         print_to_console("The script is a swirling, unreadable mess of arcane symbols.");
     }
 }
+
+void display_help_message(GameState* gs) {
+    const char* help_text =
+        "----------------------------------------------------------------------\n"
+        "Welcome to The Buccaneer's Cipher!\n"
+        "Your goal is to explore the pirate ship, solve puzzles, and find the treasure.\n"
+        "\n"
+        "HOW TO PLAY:\n"
+        " - Type commands and press Enter.\n"
+        " - Commands are usually 1 or 2 words (e.g., 'look', 'pick up sword').\n"
+        " - Pay attention to item names in room descriptions, often shown in [brackets].\n"
+        "\n"
+        "BASIC COMMANDS:\n"
+        "  Movement:\n"
+        "    north (or n)     - Move north\n"
+        "    south (or s)     - Move south\n"
+        "    east (or e)      - Move east\n"
+        "    west (or w)      - Move west\n"
+        "  Interaction:\n"
+        "    look             - Describe your current room and visible items/exits.\n"
+        "    look at [item]   - Examine an item more closely (e.g., 'look at sword').\n"
+        "    examine [item]   - Same as 'look at [item]'.\n"
+        "    pick up [item]   - Add an item to your inventory (e.g., 'pick up key').\n"
+        "    take [item]      - Same as 'pick up [item]'.\n"
+        "    drop [item]      - Remove an item from inventory and place it in the room.\n"
+        "    inventory (or i) - Show what items you are carrying.\n"
+        "    use [item]       - Use an item, sometimes on another object or character\n"
+        "                       (e.g., 'use key', 'use cook', 'use diary').\n"
+        "    open [item]      - Try to open something (e.g., 'open chest').\n"
+        "  Game:\n"
+        "    help             - Display this help message again.\n"
+        "    quit             - Exit the game.\n"
+        "----------------------------------------------------------------------";
+
+    // Log that help was displayed, but print the raw text for better formatting.
+    if (gs) { // gs might be NULL if called before game state is fully ready for logging
+        log_action(gs, "INFO", "Help message displayed to player.");
+    }
+    printf("%s\n", help_text);
+}

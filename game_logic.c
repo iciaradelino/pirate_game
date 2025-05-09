@@ -4,8 +4,13 @@
 #include "player.h"
 #include "utils.h"
 #include "animation.h" // For run_animation in restart_game_flow
+#include "game_state.h"
+#include "parser.h"
 
 #include <stdio.h> // For sprintf
+#include <string.h>
+#include <stdlib.h> // For rand, srand
+#include <time.h>   // For time
 
 // --- Room Description ---
 void show_room_description(GameState* gs) {
@@ -481,10 +486,18 @@ void process_special_input(GameState* gs, const char* raw_input) {
 }
 
 void restart_game_flow(GameState* gs) {
-    log_action(gs, "SYSTEM", "Restarting game...");
+    log_action(gs, "SYSTEM", "Restarting game / Starting new game...");
     init_game_state(gs); // Resets flags, player pos, inventory, room items etc.
     
     CLEAR_SCREEN();
+
+    // Display the initial welcome and help message
+    // Note: gs->log_file might not be open yet if this is the very first start
+    // and log_action tries to use it. display_help_message handles gs being NULL.
+    // However, in our main.c, log_file is opened before the first call to restart_game_flow.
+    display_help_message(gs); // Show how to play
+
+    // Then, the story intro
     log_action(gs, "STORY", "You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...");
     log_action(gs, "PROMPT", "Type 'continue' to board the ship. > ");
     gs->special_prompt_active = 1;

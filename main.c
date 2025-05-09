@@ -120,7 +120,7 @@ int main() {
             } else if (strcmp(command, "open") == 0 && argument && strcmp(argument, "chest") == 0) {
                 handle_open_chest(&gs);
             } else if (strcmp(command, "help") == 0) {
-                log_action(&gs, "INFO", "Commands: (n)orth, (s)outh, (e)ast, (w)est, look (at [item]), examine [item], pick up [item], take [item], drop [item], (i)nventory, use [item], open [item], quit, help.");
+                display_help_message(&gs); // Call the comprehensive help display
             }
             else {
                 char err_buf[MAX_LINE_LENGTH];

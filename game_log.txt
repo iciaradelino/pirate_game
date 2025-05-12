@@ -99,3 +99,16 @@
 [2025-05-12 13:14:05] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
 [2025-05-12 13:14:05] INFO: You see: [sword], [parrot], [portrait]
 [2025-05-12 13:14:05] INFO: Exits: East 
+[2025-05-12 13:35:31] SYSTEM: Log file opened.
+[2025-05-12 13:35:31] SYSTEM: Game client started.
+[2025-05-12 13:35:31] SYSTEM: Restarting game / Starting new game...
+[2025-05-12 13:35:31] INFO: Help message displayed to player.
+[2025-05-12 13:35:31] STORY: You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...
+[2025-05-12 13:35:31] PROMPT: Type 'continue' to board the ship. > 
+[2025-05-12 13:35:39] PLAYER_CMD (SPECIAL): continue
+[2025-05-12 13:35:39] ACTION: You decide to board the galleon...
+[2025-05-12 13:35:43] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-12 13:35:43] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-12 13:35:43] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-12 13:35:43] INFO: Exits: East 

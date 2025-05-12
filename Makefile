@@ -1,18 +1,21 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
-LDFLAGS =
-OBJ_FILES = main.o item.o room.o player.o game_state.o utils.o animation.o parser.o game_logic.o
-TARGET = pirate_adventure
+CC        = gcc
+CFLAGS    = -Wall -Wextra -std=c99
+LDFLAGS   =
+OBJ_FILES = dist/main.o dist/item.o dist/room.o dist/player.o dist/game_state.o dist/utils.o dist/animation.o dist/parser.o dist/game_logic.o
+TARGET    = dist/pirate_adventure
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ_FILES)
 	$(CC) $(LDFLAGS) $^ -o $@
 
-%.o: %.c
+dist/%.o: %.c | dist
 	$(CC) $(CFLAGS) -c $< -o $@
 
+dist:
+	mkdir -p dist
+
 clean:
-	rm -f $(OBJ_FILES) $(TARGET) game_log.txt
+	rm -f dist/*.o $(TARGET) dist/game_log.txt
 
 .PHONY: all clean

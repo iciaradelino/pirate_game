@@ -3,3 +3,86 @@
 [2025-05-09 14:07:01] INFO: Help message displayed to player.
 [2025-05-09 14:07:01] STORY: You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...
 [2025-05-09 14:07:01] PROMPT: Type 'continue' to board the ship. > 
+[2025-05-09 14:14:15] SYSTEM: Game client started.
+[2025-05-09 14:14:15] SYSTEM: Restarting game / Starting new game...
+[2025-05-09 14:14:15] INFO: Help message displayed to player.
+[2025-05-09 14:14:15] STORY: You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...
+[2025-05-09 14:14:15] PROMPT: Type 'continue' to board the ship. > 
+[2025-05-09 14:14:19] PLAYER_CMD (SPECIAL): continue
+[2025-05-09 14:14:19] ACTION: You decide to board the galleon...
+[2025-05-09 14:14:23] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-09 14:14:23] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-09 14:14:23] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-09 14:14:23] INFO: Exits: East 
+[2025-05-09 14:14:28] PLAYER_CMD: help
+[2025-05-09 14:14:28] INFO: Help message displayed to player.
+[2025-05-09 14:14:44] PLAYER_CMD: pick up sword
+[2025-05-09 14:14:44] ACTION: You picked up the sword.
+[2025-05-09 14:14:48] PLAYER_CMD: i
+[2025-05-09 14:14:48] INFO: You are carrying: [sword]
+[2025-05-09 14:14:55] PLAYER_CMD: west
+[2025-05-09 14:14:55] GAME_ERROR: You can't go that way.
+[2025-05-09 14:15:00] PLAYER_CMD: east
+[2025-05-09 14:15:00] INFO: 
+--- The Galley ---
+[2025-05-09 14:15:00] INFO: The cramped galley smells of stale food and rum. A grumpy-looking Cook stirs a bubbling pot. There's a door to the south leading to a cold storage area, and another door north.
+[2025-05-09 14:15:00] INFO: The room is empty of notable items.
+[2025-05-09 14:15:00] INFO: Exits: North South West 
+[2025-05-09 14:15:11] PLAYER_CMD: north
+[2025-05-09 14:15:11] GAME_INFO: The Cook blocks your path north. 'Not until ye fetch me ingredients, matey!'
+[2025-05-09 14:15:18] PLAYER_CMD: west
+[2025-05-09 14:15:18] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-09 14:15:18] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-09 14:15:18] INFO: You see: [parrot], [portrait]
+[2025-05-09 14:15:18] INFO: Exits: East 
+[2025-05-09 14:15:21] PLAYER_CMD: east
+[2025-05-09 14:15:21] INFO: 
+--- The Galley ---
+[2025-05-09 14:15:21] INFO: You are back in the The Galley.
+[2025-05-09 14:15:21] INFO: The room is empty of notable items.
+[2025-05-09 14:15:21] INFO: Exits: North South West 
+[2025-05-09 14:15:38] PLAYER_CMD: west
+[2025-05-09 14:15:38] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-09 14:15:38] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-09 14:15:38] INFO: You see: [parrot], [portrait]
+[2025-05-09 14:15:38] INFO: Exits: East 
+[2025-05-09 14:15:42] PLAYER_CMD: east
+[2025-05-09 14:15:42] INFO: 
+--- The Galley ---
+[2025-05-09 14:15:42] INFO: You are back in the The Galley.
+[2025-05-09 14:15:42] INFO: The room is empty of notable items.
+[2025-05-09 14:15:42] INFO: Exits: North South West 
+[2025-05-09 14:15:43] PLAYER_CMD: south
+[2025-05-09 14:15:43] INFO: 
+--- Fridge Room (Pantry) ---
+[2025-05-09 14:15:43] INFO: A chilly room, lined with shelves. Various foodstuffs are stored here.
+[2025-05-09 14:15:43] INFO: You see: [pork], [biscuits], [grog], [fish]
+[2025-05-09 14:15:43] INFO: Exits: North 
+[2025-05-09 14:15:53] PLAYER_CMD: pick up pork
+[2025-05-09 14:15:53] ACTION: You picked up the pork.
+[2025-05-09 14:15:56] PLAYER_CMD: pick up biscuits
+[2025-05-09 14:15:56] ACTION: You picked up the biscuits.
+[2025-05-09 14:16:00] PLAYER_CMD: pick up grog
+[2025-05-09 14:16:00] ACTION: You picked up the grog.
+[2025-05-09 14:16:16] PLAYER_CMD: help
+[2025-05-09 14:16:16] INFO: Help message displayed to player.
+[2025-05-09 14:16:24] PLAYER_CMD: south
+[2025-05-09 14:16:24] GAME_ERROR: You can't go that way.
+[2025-05-09 14:16:26] PLAYER_CMD: east
+[2025-05-09 14:16:26] GAME_ERROR: You can't go that way.
+[2025-05-09 14:16:28] PLAYER_CMD: west
+[2025-05-09 14:16:28] GAME_ERROR: You can't go that way.
+[2025-05-09 14:16:29] PLAYER_CMD: north
+[2025-05-09 14:16:29] INFO: 
+--- The Galley ---
+[2025-05-09 14:16:29] INFO: You are back in the The Galley.
+[2025-05-09 14:16:29] INFO: The room is empty of notable items.
+[2025-05-09 14:16:29] INFO: Exits: North South West 
+[2025-05-09 14:16:38] PLAYER_CMD: north
+[2025-05-09 14:16:38] GAME_INFO: The Cook blocks your path north. 'Not until ye fetch me ingredients, matey!'
+[2025-05-09 14:16:45] PLAYER_CMD: use cook
+[2025-05-09 14:16:45] GAME_EVENT: You give the Salted Pork, Hardtack Biscuits, and Grog Bottle to the Cook.
+[2025-05-09 14:16:45] GAME_EVENT: Cook: 'Hah! Not entirely useless, are ye? Right then, the Captain's stew it is! You can pass north now.'

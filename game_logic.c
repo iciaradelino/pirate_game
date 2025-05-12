@@ -14,7 +14,7 @@
 
 // --- Room Description ---
 void show_room_description(GameState* gs) {
-    Room* current_room = &game_rooms[gs->player.current_room_id];
+    Room* current_room = &gs->rooms[gs->player.current_room_id];
     char buffer[MAX_LINE_LENGTH * 2]; // Increased buffer size
 
     sprintf(buffer, "\n--- %s ---", current_room->name);
@@ -32,7 +32,7 @@ void show_room_description(GameState* gs) {
     int items_listed = 0;
     strcpy(buffer, "You see: ");
     for (int i = 0; i < current_room->item_count; ++i) {
-        Item* item = &game_items[current_room->items_in_room[i]];
+        Item* item = &gs->items[current_room->items_in_room[i]];
         if (item->id != ITEM_NONE) {
             if (items_listed > 0) strcat(buffer, ", ");
             strcat(buffer, "["); // Add brackets for clarity
@@ -77,7 +77,7 @@ void handle_win_game(GameState* gs) {
 
 // --- Movement ---
 void handle_move(GameState* gs, const char* direction_str) {
-    Room* current_room = &game_rooms[gs->player.current_room_id];
+    Room* current_room = &gs->rooms[gs->player.current_room_id];
     RoomID next_room_id = NUM_ROOMS;
     int dir_idx = -1;
 
@@ -109,7 +109,7 @@ void handle_move(GameState* gs, const char* direction_str) {
         }
 
         gs->player.current_room_id = next_room_id;
-        // game_rooms[next_room_id].visited = 0; // Reset visited if you want full description always on entry
+        // gs->rooms[next_room_id].visited = 0; // Reset visited if you want full description always on entry
         show_room_description(gs);
 
         // Post-entry events
@@ -134,13 +134,13 @@ void handle_examine(GameState* gs, const char* item_name_str) {
     }
 
     Item* item_to_examine = NULL;
-    Room* current_room = &game_rooms[gs->player.current_room_id];
+    Room* current_room = &gs->rooms[gs->player.current_room_id];
 
     // Check room items first
     for (int i = 0; i < current_room->item_count; ++i) {
         ItemID current_item_id = current_room->items_in_room[i];
-        if (strcasecmp(game_items[current_item_id].name, item_name_str) == 0) {
-            item_to_examine = &game_items[current_item_id];
+        if (strcasecmp(gs->items[current_item_id].name, item_name_str) == 0) {
+            item_to_examine = &gs->items[current_item_id];
             break;
         }
     }
@@ -148,8 +148,8 @@ void handle_examine(GameState* gs, const char* item_name_str) {
     if (!item_to_examine) {
         for (int i = 0; i < gs->player.inventory_count; ++i) {
             ItemID current_item_id = gs->player.inventory[i];
-            if (strcasecmp(game_items[current_item_id].name, item_name_str) == 0) {
-                item_to_examine = &game_items[current_item_id];
+            if (strcasecmp(gs->items[current_item_id].name, item_name_str) == 0) {
+                item_to_examine = &gs->items[current_item_id];
                 break;
             }
         }
@@ -170,18 +170,18 @@ void handle_pickup(GameState* gs, const char* item_name_str) {
         return;
     }
 
-    Room* current_room = &game_rooms[gs->player.current_room_id];
+    Room* current_room = &gs->rooms[gs->player.current_room_id];
     ItemID item_id_to_pickup = ITEM_NONE;
 
     for (int i = 0; i < current_room->item_count; ++i) {
-        if (strcasecmp(game_items[current_room->items_in_room[i]].name, item_name_str) == 0) {
+        if (strcasecmp(gs->items[current_room->items_in_room[i]].name, item_name_str) == 0) {
             item_id_to_pickup = current_room->items_in_room[i];
             break;
         }
     }
 
     if (item_id_to_pickup != ITEM_NONE) {
-        Item* item_ptr = &game_items[item_id_to_pickup];
+        Item* item_ptr = &gs->items[item_id_to_pickup];
         if (item_ptr->can_pickup) {
             if (gs->player.inventory_count < MAX_INVENTORY_ITEMS) {
                 add_item_to_inventory(&gs->player, item_id_to_pickup);
@@ -212,19 +212,19 @@ void handle_drop(GameState* gs, const char* item_name_str) {
     ItemID item_id_to_drop = ITEM_NONE;
 
     for (int i = 0; i < gs->player.inventory_count; ++i) {
-        if (strcasecmp(game_items[gs->player.inventory[i]].name, item_name_str) == 0) {
+        if (strcasecmp(gs->items[gs->player.inventory[i]].name, item_name_str) == 0) {
             item_id_to_drop = gs->player.inventory[i];
             break;
         }
     }
 
     if (item_id_to_drop != ITEM_NONE) {
-        Room* current_room = &game_rooms[gs->player.current_room_id];
+        Room* current_room = &gs->rooms[gs->player.current_room_id];
         if (current_room->item_count < MAX_ROOM_ITEMS) {
             add_item_to_room(current_room, item_id_to_drop);
             remove_item_from_inventory(&gs->player, item_id_to_drop);
             char buffer[MAX_LINE_LENGTH];
-            sprintf(buffer, "You dropped the %s.", game_items[item_id_to_drop].name);
+            sprintf(buffer, "You dropped the %s.", gs->items[item_id_to_drop].name);
             log_action(gs, "ACTION", buffer);
         } else {
             log_action(gs, "GAME_ERROR", "There's no space to drop that here.");
@@ -244,7 +244,7 @@ void handle_inventory(GameState* gs) {
     char buffer[MAX_LINE_LENGTH * 2] = "You are carrying: "; // Increased buffer
     for (int i = 0; i < gs->player.inventory_count; ++i) {
         strcat(buffer, "[");
-        strcat(buffer, game_items[gs->player.inventory[i]].name);
+        strcat(buffer, gs->items[gs->player.inventory[i]].name);
         strcat(buffer, "]");
         if (i < gs->player.inventory_count - 1) {
             strcat(buffer, ", ");
@@ -318,7 +318,7 @@ void handle_use_treasurekey(GameState* gs) {
     if (!player_has_item(&gs->player, ITEM_TREASURE_KEY)) {
         log_action(gs, "GAME_ERROR", "You don't have the treasure key."); return;
     }
-    if (gs->player.current_room_id == ROOM_CAPTAIN_QUARTERS && game_rooms[ROOM_CAPTAIN_QUARTERS].exits[0] == ROOM_TREASURE_ROOM) {
+    if (gs->player.current_room_id == ROOM_CAPTAIN_QUARTERS && gs->rooms[ROOM_CAPTAIN_QUARTERS].exits[0] == ROOM_TREASURE_ROOM) {
         log_action(gs, "GAME_EVENT", "You try the Treasure Key on the locked door to the north... it seems like it would fit!");
         log_action(gs, "GAME_INFO", "(Try going north to use it automatically)");
     } else {
@@ -365,7 +365,7 @@ void handle_open_chest(GameState* gs) {
     }
     if (gs->chest_unlocked) {
         char chest_msg[MAX_LINE_LENGTH] = "The chest is already open. ";
-        if (!player_has_item(&gs->player, ITEM_TREASURE_KEY) && item_in_room(&game_rooms[ROOM_CAPTAIN_QUARTERS], ITEM_TREASURE_KEY)){
+        if (!player_has_item(&gs->player, ITEM_TREASURE_KEY) && item_in_room(&gs->rooms[ROOM_CAPTAIN_QUARTERS], ITEM_TREASURE_KEY)){
             strcat(chest_msg, "You see the [TreasureKey] inside.");
         } else if (player_has_item(&gs->player, ITEM_TREASURE_KEY)){
             strcat(chest_msg, "You already took the key.");
@@ -464,7 +464,7 @@ void process_special_input(GameState* gs, const char* raw_input) {
         if (strcmp(input, "esmeralda") == 0) {
             log_action(gs, "GAME_EVENT", "CLICK! The lock springs open. Inside is a gleaming [TreasureKey]!");
             gs->chest_unlocked = 1;
-            add_item_to_room(&game_rooms[ROOM_CAPTAIN_QUARTERS], ITEM_TREASURE_KEY);
+            add_item_to_room(&gs->rooms[ROOM_CAPTAIN_QUARTERS], ITEM_TREASURE_KEY);
             gs->special_prompt_active = 0;
         } else {
             log_action(gs, "GAME_EVENT", "The lock remains stubbornly shut.");

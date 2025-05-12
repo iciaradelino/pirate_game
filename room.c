@@ -1,4 +1,5 @@
 #include "room.h"
+#include "game_state.h" // Needed for init_rooms signature
 #include <stdio.h> // For NULL
 
 // Define the global rooms array

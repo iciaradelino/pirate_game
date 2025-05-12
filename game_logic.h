@@ -17,6 +17,6 @@ void process_special_input(GameState* gs, const char* input);
 
 void handle_game_over(GameState* gs, const char* message, const char* art_key);
 void handle_win_game(GameState* gs);
-void restart_game_flow(GameState* gs); // Renamed from restart_the_game
+void restart_game_flow(GameState* gs);
 
 #endif // GAME_LOGIC_H

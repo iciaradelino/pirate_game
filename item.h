@@ -1,7 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "common.h" // For MAX_LINE_LENGTH (though not directly used in this struct definition, good practice)
+#include "common.h" // For MAX_LINE_LENGTH, GameState fwd dec
 
 #define MAX_ITEMS 20 // Max different types of items
 
@@ -27,10 +27,8 @@ typedef struct Item {
     int can_pickup;
 } Item;
 
-extern Item game_items[MAX_ITEMS]; // Global item definitions array
-
 // Function prototypes
-void init_items(void);
-Item* get_item_by_name(const char* name);
+void init_items(GameState* gs); // Now takes GameState to initialize gs->items
+Item* get_item_by_name(GameState* gs, const char* name); // Now takes GameState to search gs->items
 
 #endif // ITEM_H

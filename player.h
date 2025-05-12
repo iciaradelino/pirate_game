@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "common.h" // For basic types if needed
 #include "item.h" // Needs ItemID
 #include "room.h" // Needs RoomID
 

@@ -36,6 +36,7 @@ void init_game_state(GameState *gs)
     gs->special_prompt_context[0]  = '\0';
 
     // Re-initialize rooms (clears items, resets visited status)
+    // Initialize rooms *within this gs instance*
     // This is crucial for game restarts.
-    init_rooms();
+    init_rooms(gs); // Pass gs
 }

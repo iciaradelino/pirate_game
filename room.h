@@ -1,6 +1,7 @@
 #ifndef ROOM_H
 #define ROOM_H
 
+#include "common.h" // Needs GameState fwd dec
 #include "item.h" // Needs ItemID
 
 #define MAX_ROOM_ITEMS 10
@@ -26,10 +27,8 @@ typedef struct Room {
     int visited; // To control full vs. short description
 } Room;
 
-extern Room game_rooms[NUM_ROOMS]; // Global room definitions array
-
 // Function prototypes
-void init_rooms(void);
+void init_rooms(GameState* gs); // Now takes GameState to initialize gs->rooms
 void add_item_to_room(Room* room, ItemID item_id);
 void remove_item_from_room(Room* room, ItemID item_id);
 int item_in_room(Room* room, ItemID item_id); // Declaration for the fix

@@ -2,7 +2,7 @@
 #include "utils.h" // For log_action (needs full GameState)
 #include "game_state.h" // For full GameState for log_action
 
-int run_animation(const char *filename, GameState* gs) {
+int run_animation(const char* filename, GameState* gs) {
     FILE *fp = fopen(filename, "r");
     if (!fp) {
         log_action(gs, "SYSTEM_ERROR", "Failed to open animation file.");
@@ -18,7 +18,7 @@ int run_animation(const char *filename, GameState* gs) {
     delay_seconds = atof(line);
 
     // Skip header lines (assuming 3 lines after delay)
-    for(int i=0; i<3; ++i) {
+    for(int i = 0; i < 3; ++i) {
         if (!fgets(line, sizeof(line), fp)) { fclose(fp); return 1; }
     }
     

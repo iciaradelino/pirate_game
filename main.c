@@ -26,10 +26,9 @@ static FILE *open_log_file_checked(const char *filename)
 
 int main(void)
 {
-    GameState gs;
+    GameState gs; // Create gs first
 
-    init_items();
-
+    // Open log file *before* any logging happens
     gs.log_file = open_log_file_checked(LOG_FILENAME);
     if (gs.log_file)
     {
@@ -37,7 +36,10 @@ int main(void)
     }
     log_action(&gs, "SYSTEM", "Game client started.");
 
-    restart_game_flow(&gs);
+    // Initialize the static item definitions *into gs*
+    init_items(&gs); // Pass gs
+
+    restart_game_flow(&gs); // This calls init_game_state which calls init_rooms
 
     while (!gs.game_won)
     {

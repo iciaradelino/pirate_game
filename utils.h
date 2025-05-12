@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "common.h" // For GameState forward dec, FILE*, MAX_LINE_LENGTH
+#include "common.h" // For GameState forward dec, FILE*, MAX_LINE_LENGTH, etc.
 #include "game_state.h" // Add if GameState is used by other utils funcs, or fine to have here
 
 // Function prototypes

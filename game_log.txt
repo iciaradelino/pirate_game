@@ -86,3 +86,16 @@
 [2025-05-09 14:16:45] PLAYER_CMD: use cook
 [2025-05-09 14:16:45] GAME_EVENT: You give the Salted Pork, Hardtack Biscuits, and Grog Bottle to the Cook.
 [2025-05-09 14:16:45] GAME_EVENT: Cook: 'Hah! Not entirely useless, are ye? Right then, the Captain's stew it is! You can pass north now.'
+[2025-05-12 13:13:54] SYSTEM: Log file opened.
+[2025-05-12 13:13:54] SYSTEM: Game client started.
+[2025-05-12 13:13:54] SYSTEM: Restarting game / Starting new game...
+[2025-05-12 13:13:54] INFO: Help message displayed to player.
+[2025-05-12 13:13:54] STORY: You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...
+[2025-05-12 13:13:54] PROMPT: Type 'continue' to board the ship. > 
+[2025-05-12 13:14:01] PLAYER_CMD (SPECIAL): continue
+[2025-05-12 13:14:01] ACTION: You decide to board the galleon...
+[2025-05-12 13:14:05] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-12 13:14:05] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-12 13:14:05] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-12 13:14:05] INFO: Exits: East 

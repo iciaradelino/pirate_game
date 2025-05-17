@@ -50,7 +50,7 @@ void parse_input(char* input, char** command, char** argument) {
                strcmp(*command, "open") == 0) {
         *argument = strtok(NULL, " \t\n");
     }
-    // For commands that take no arguments (N, S, E, W, inventory, quit, help, map)
+    // For commands that take no arguments (N, S, E, W, inventory, quit, help, map, hint)
     else {
         *argument = NULL; // Ensure argument is NULL for these
     }

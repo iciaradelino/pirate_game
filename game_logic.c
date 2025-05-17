@@ -92,9 +92,14 @@ void handle_move(GameState* gs, const char* direction_str) {
 
     if (next_room_id != NUM_ROOMS) {
         // Pre-entry checks
-        if (next_room_id == ROOM_CAPTAIN_QUARTERS && !gs->cook_pleased && gs->player.current_room_id == ROOM_GALLEY) {
-            log_action(gs, "GAME_INFO", "The Cook blocks your path north. 'Not until ye fetch me ingredients, matey! I need some [Salted Pork], [Hardtack Biscuits], and a [Grog Bottle] for the Captain\'s stew.'");
-            return;
+        if (next_room_id == ROOM_CAPTAIN_QUARTERS && gs->player.current_room_id == ROOM_GALLEY) {
+            if (!gs->cook_pleased) { // Cook is NOT pleased
+                log_action(gs, "GAME_INFO", "The Cook blocks your path north. 'Not until ye fetch me ingredients, matey! I need some [Salted Pork], [Hardtack Biscuits], and a [Grog Bottle] for the Captain\'s stew.'");
+                return;
+            } else { // Cook IS pleased, and player is moving North
+                log_action(gs, "GAME_INFO", "The Cook nods as you pass. 'The stew was fine. Go on about yer business.'");
+                // No return here, allow movement
+            }
         }
         if (next_room_id == ROOM_CAPTAIN_QUARTERS && player_has_item(&gs->player, ITEM_PARROT)) {
             handle_game_over(gs, "The parrot suddenly squawks loudly, 'Intruder! Intruder!' The sleeping Captain jolts awake and shoots you!", "GAME_OVER_CAPTAIN");
@@ -511,4 +516,69 @@ void restart_game_flow(GameState* gs) {
     log_action(gs, "PROMPT", "Type 'continue' to board the ship. > ");
     gs->special_prompt_active = 1;
     strcpy(gs->special_prompt_context, "INTRO_CONTINUE");
+}
+
+void handle_hint(GameState* gs) {
+    Room* current_room = &gs->rooms[gs->player.current_room_id];
+    char hint_message[MAX_LINE_LENGTH * 2] = ""; // Increased buffer for longer hints
+
+    switch (gs->player.current_room_id) {
+        case ROOM_DECK:
+            strcat(hint_message, "This is where your adventure begins. Try 'look' to get your bearings, 'examine [item]' to inspect things closely (like that [parrot] or [portrait]), and 'pick up [item]' for useful objects like the [sword]. The only obvious exit is [East].");
+            break;
+        case ROOM_GALLEY:
+            if (!gs->cook_pleased) {
+                strcat(hint_message, "The Cook blocks the way North. He needs specific ingredients: [Salted Pork], [Hardtack Biscuits], and a [Grog Bottle]. These might be in the [Fridge] to the South. Once you have them all, try 'use cook'.");
+            } else {
+                strcat(hint_message, "The Cook is satisfied. The path North to the [Captain\'s Quarters] is open. You can also go [West] back to the Deck or [South] to the Fridge.");
+            }
+            break;
+        case ROOM_FRIDGE:
+            strcat(hint_message, "This pantry should have the ingredients the Cook needs. Look for [Salted Pork] (pork), [Hardtack Biscuits] (biscuits), and a [Grog Bottle] (grog). Use 'pick up [item]' for each.");
+            break;
+        case ROOM_CAPTAIN_QUARTERS:
+            if (!gs->chest_unlocked) {
+                if (!gs->diary_deciphered && player_has_item(&gs->player, ITEM_DIARY) && player_has_item(&gs->player, ITEM_MYSTIC_LENS)) {
+                    strcat(hint_message, "You have the [Diary] and the [Mystic Lens]. Try 'use diary' to see if the lens reveals its secrets. The [Chest] in the corner also looks important.");
+                } else if (!gs->diary_deciphered && player_has_item(&gs->player, ITEM_DIARY)) {
+                    strcat(hint_message, "The Captain\'s [Diary] seems to be written in code. Perhaps an item from the prisoners could help? Don\'t forget about the [Chest].");
+                } else if (gs->diary_deciphered && gs->knows_chest_code) {
+                    strcat(hint_message, "You know the code 'ESMERALDA' for the [Chest] from the diary. Try to 'open chest'.");
+                } else {
+                    strcat(hint_message, "The Captain\'s Quarters... A [Diary] lies on the desk, and a [Chest] is in the corner. The North door to the [Treasure Room] is locked tight.");
+                }
+            } else if (gs->chest_unlocked && !player_has_item(&gs->player, ITEM_TREASURE_KEY) && item_in_room(current_room, ITEM_TREASURE_KEY)) {
+                strcat(hint_message, "The [Chest] is open and you found the [TreasureKey]! Make sure to 'pick up treasurekey'.");
+            } else if (player_has_item(&gs->player, ITEM_TREASURE_KEY)) {
+                strcat(hint_message, "You have the [TreasureKey]! The door North to the [Treasure Room] should now unlock if you try to go 'north'.");
+            } else {
+                strcat(hint_message, "The North door to the [Treasure Room] is locked. Search for clues or a key. The [Chest] might be a good place to start if you can open it.");
+            }
+            break;
+        case ROOM_PRISON_HOLD:
+            if (gs->special_prompt_active && strcmp(gs->special_prompt_context, "PRISONER_ATTACK") == 0) {
+                strcat(hint_message, "The prisoners are hostile! If you picked up the [Sword] from the deck, 'use sword' to defend yourself!");
+            } else if (gs->special_prompt_active && strncmp(gs->special_prompt_context, "RIDDLE_ANSWER_", strlen("RIDDLE_ANSWER_")) == 0) {
+                strcat(hint_message, "Answer the prisoners\' riddles. Type your one-word answer and press Enter.");
+            } else if (player_has_item(&gs->player, ITEM_MYSTIC_LENS) && player_has_item(&gs->player, ITEM_DIARY) && !gs->diary_deciphered) {
+                strcat(hint_message, "The prisoners gave you a [Mystic Lens]. If you also have the Captain\'s [Diary], try 'use diary' or 'use lens' to decipher it.");
+            } else if (!player_has_item(&gs->player, ITEM_MYSTIC_LENS) && gs->prisoners_pacified) {
+                 strcat(hint_message, "The prisoners mentioned a [Mystic Lens] after you solved their riddles. It should be in your inventory. It might be useful later.");
+            } else {
+                strcat(hint_message, "The prisoners are calm now. They mentioned something about the Captain\'s diary. The way [West] leads back to the Captain\'s Quarters.");
+            }
+            break;
+        case ROOM_TREASURE_ROOM:
+            strcat(hint_message, "You\'ve made it to the Treasure Room! Congratulations, you\'ve won!");
+            break;
+        default:
+            strcat(hint_message, "No specific hint here. Try 'look' to survey your surroundings or 'inventory' to check your items.");
+            break;
+    }
+
+    if (strlen(hint_message) > 0) {
+        log_action(gs, "HINT", hint_message);
+    } else {
+        log_action(gs, "HINT", "No specific hint available right now.");
+    }
 }

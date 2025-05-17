@@ -236,6 +236,10 @@ static int execute_command(GameState *gs, const char *command, const char *argum
     {
         display_map(gs);
     }
+    else if (strcmp(command, "hint") == 0)
+    {
+        handle_hint(gs);
+    }
     else
     {
         char err_buf[MAX_LINE_LENGTH];

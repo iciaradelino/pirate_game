@@ -99,6 +99,7 @@ void display_help_message(GameState* gs) {
         "    map              - Display the game map.\n"
         "  Game:\n"
         "    help             - Display this help message again.\n"
+        "    hint             - Get a hint for your current situation.\n"
         "    quit             - Exit the game.\n"
         "----------------------------------------------------------------------";
 

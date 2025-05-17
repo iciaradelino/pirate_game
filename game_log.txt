@@ -235,3 +235,218 @@
 [2025-05-17 12:20:39] GAME_EVENT: You hesitate or do the wrong thing!
 [2025-05-17 12:20:39] GAME_EVENT: Without a weapon to defend yourself, the prisoners overwhelm you.
 [2025-05-17 12:20:39] PROMPT: Game Over. Play again? (yes/no) > 
+[2025-05-17 12:24:43] SYSTEM: Log file opened.
+[2025-05-17 12:24:43] SYSTEM: Game client started.
+[2025-05-17 12:24:43] SYSTEM: Restarting game / Starting new game...
+[2025-05-17 12:24:44] INFO: Help message displayed to player.
+[2025-05-17 12:24:44] STORY: You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...
+[2025-05-17 12:24:44] PROMPT: Type 'continue' to board the ship. > 
+[2025-05-17 12:24:59] PLAYER_CMD (SPECIAL): continue
+[2025-05-17 12:24:59] ACTION: You decide to board the galleon...
+[2025-05-17 12:25:03] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-17 12:25:03] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-17 12:25:03] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-17 12:25:03] INFO: Exits: East 
+[2025-05-17 12:25:07] PLAYER_CMD: East
+[2025-05-17 12:25:07] INFO: 
+--- The Galley ---
+[2025-05-17 12:25:07] INFO: The cramped galley smells of stale food and rum. A grumpy-looking Cook stirs a bubbling pot. There's a door to the south leading to a cold storage area, and another door north.
+[2025-05-17 12:25:07] INFO: The room is empty of notable items.
+[2025-05-17 12:25:07] INFO: Exits: North South West 
+[2025-05-17 12:25:15] PLAYER_CMD: West
+[2025-05-17 12:25:15] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-17 12:25:15] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-17 12:25:15] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-17 12:25:15] INFO: Exits: East 
+[2025-05-17 12:25:18] PLAYER_CMD: pick up sword
+[2025-05-17 12:25:18] ACTION: You picked up the sword.
+[2025-05-17 12:25:20] PLAYER_CMD: East
+[2025-05-17 12:25:20] INFO: 
+--- The Galley ---
+[2025-05-17 12:25:20] INFO: You are back in the The Galley.
+[2025-05-17 12:25:20] INFO: The room is empty of notable items.
+[2025-05-17 12:25:20] INFO: Exits: North South West 
+[2025-05-17 12:25:24] PLAYER_CMD: look
+[2025-05-17 12:25:24] INFO: 
+--- The Galley ---
+[2025-05-17 12:25:24] INFO: You are back in the The Galley.
+[2025-05-17 12:25:24] INFO: The room is empty of notable items.
+[2025-05-17 12:25:24] INFO: Exits: North South West 
+[2025-05-17 12:25:37] PLAYER_CMD: North
+[2025-05-17 12:25:37] GAME_INFO: The Cook blocks your path north. 'Not until ye fetch me ingredients, matey! I need some [Salted Pork], [Hardtack Biscuits], and a [Grog Bottle] for the Captain's stew.'
+[2025-05-17 12:25:44] PLAYER_CMD: West
+[2025-05-17 12:25:44] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-17 12:25:44] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-17 12:25:44] INFO: You see: [parrot], [portrait]
+[2025-05-17 12:25:44] INFO: Exits: East 
+[2025-05-17 12:25:51] PLAYER_CMD: East
+[2025-05-17 12:25:51] INFO: 
+--- The Galley ---
+[2025-05-17 12:25:51] INFO: You are back in the The Galley.
+[2025-05-17 12:25:51] INFO: The room is empty of notable items.
+[2025-05-17 12:25:51] INFO: Exits: North South West 
+[2025-05-17 12:25:59] PLAYER_CMD: West
+[2025-05-17 12:25:59] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-17 12:25:59] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-17 12:25:59] INFO: You see: [parrot], [portrait]
+[2025-05-17 12:25:59] INFO: Exits: East 
+[2025-05-17 12:26:01] PLAYER_CMD: East
+[2025-05-17 12:26:01] INFO: 
+--- The Galley ---
+[2025-05-17 12:26:01] INFO: You are back in the The Galley.
+[2025-05-17 12:26:01] INFO: The room is empty of notable items.
+[2025-05-17 12:26:01] INFO: Exits: North South West 
+[2025-05-17 12:26:02] PLAYER_CMD: look
+[2025-05-17 12:26:02] INFO: 
+--- The Galley ---
+[2025-05-17 12:26:02] INFO: You are back in the The Galley.
+[2025-05-17 12:26:02] INFO: The room is empty of notable items.
+[2025-05-17 12:26:02] INFO: Exits: North South West 
+[2025-05-17 12:26:05] PLAYER_CMD: South
+[2025-05-17 12:26:05] INFO: 
+--- Fridge Room (Pantry) ---
+[2025-05-17 12:26:05] INFO: A chilly room, lined with shelves. Various foodstuffs are stored here.
+[2025-05-17 12:26:05] INFO: You see: [pork], [biscuits], [grog], [fish]
+[2025-05-17 12:26:05] INFO: Exits: North 
+[2025-05-17 12:26:10] PLAYER_CMD: pick up pork
+[2025-05-17 12:26:10] ACTION: You picked up the pork.
+[2025-05-17 12:26:12] PLAYER_CMD: pick up biscuits
+[2025-05-17 12:26:12] ACTION: You picked up the biscuits.
+[2025-05-17 12:26:14] PLAYER_CMD: pick up grog
+[2025-05-17 12:26:14] ACTION: You picked up the grog.
+[2025-05-17 12:26:18] PLAYER_CMD: look
+[2025-05-17 12:26:18] INFO: 
+--- Fridge Room (Pantry) ---
+[2025-05-17 12:26:18] INFO: You are back in the Fridge Room (Pantry).
+[2025-05-17 12:26:18] INFO: You see: [fish]
+[2025-05-17 12:26:18] INFO: Exits: North 
+[2025-05-17 12:26:19] PLAYER_CMD: move North
+[2025-05-17 12:26:19] GAME_ERROR: Unknown command: 'move'
+[2025-05-17 12:26:22] PLAYER_CMD: North
+[2025-05-17 12:26:22] INFO: 
+--- The Galley ---
+[2025-05-17 12:26:22] INFO: You are back in the The Galley.
+[2025-05-17 12:26:22] INFO: The room is empty of notable items.
+[2025-05-17 12:26:22] INFO: Exits: North South West 
+[2025-05-17 12:26:26] PLAYER_CMD: North
+[2025-05-17 12:26:26] GAME_INFO: The Cook blocks your path north. 'Not until ye fetch me ingredients, matey! I need some [Salted Pork], [Hardtack Biscuits], and a [Grog Bottle] for the Captain's stew.'
+[2025-05-17 12:26:31] PLAYER_CMD: use cook
+[2025-05-17 12:26:31] GAME_EVENT: You give the Salted Pork, Hardtack Biscuits, and Grog Bottle to the Cook.
+[2025-05-17 12:26:31] GAME_EVENT: Cook: 'Hah! Not entirely useless, are ye? Right then, the Captain's stew it is! You can pass north now.'
+[2025-05-17 12:27:02] PLAYER_CMD: look
+[2025-05-17 12:27:02] INFO: 
+--- The Galley ---
+[2025-05-17 12:27:02] INFO: You are back in the The Galley.
+[2025-05-17 12:27:02] INFO: The room is empty of notable items.
+[2025-05-17 12:27:02] INFO: Exits: North South West 
+[2025-05-17 12:27:04] PLAYER_CMD: North
+[2025-05-17 12:27:04] INFO: 
+--- Captain's Quarters ---
+[2025-05-17 12:27:04] INFO: A lavishly decorated cabin. A large Captain figure lies snoring on a rug. A grand desk holds a leather-bound [Diary]. A sturdy [Chest] sits in the corner. There's a barred door to the east.
+[2025-05-17 12:27:04] INFO: You see: [diary]
+[2025-05-17 12:27:04] INFO: Exits: North South East 
+[2025-05-17 12:27:18] PLAYER_CMD: pick up diary
+[2025-05-17 12:27:18] ACTION: You picked up the diary.
+[2025-05-17 12:27:20] PLAYER_CMD: East
+[2025-05-17 12:27:20] INFO: 
+--- Prison Hold ---
+[2025-05-17 12:27:20] INFO: A dark, damp hold. Three shadowy Prisoners look agitated.
+[2025-05-17 12:27:20] INFO: The room is empty of notable items.
+[2025-05-17 12:27:20] INFO: Exits: West 
+[2025-05-17 12:27:20] GAME_EVENT: You open the door to a dark, damp hold. Three shadowy Prisoners lunge at you with makeshift shivs!
+[2025-05-17 12:27:20] PROMPT: The prisoners are about to attack! What do you do? > 
+[2025-05-17 12:27:24] PLAYER_CMD (SPECIAL): use sword
+[2025-05-17 12:27:24] ACTION: You draw your sword, its polished steel gleaming in the dim light.
+[2025-05-17 12:27:24] GAME_EVENT: The prisoners halt, eyes wide with fear. 'Alright, alright! We yield! No need for bloodshed!'
+[2025-05-17 12:27:24] GAME_EVENT: One prisoner speaks: 'We're tired of this brig... Answer our riddles three!'
+[2025-05-17 12:27:24] RIDDLE: Riddle 1: I have a spine, but no bones. I tell tales of distant zones. What am I?
+[2025-05-17 12:27:24] PROMPT: Your answer? > 
+[2025-05-17 12:27:55] PLAYER_CMD (SPECIAL): book
+[2025-05-17 12:27:55] GAME_EVENT: Correct!
+[2025-05-17 12:27:55] RIDDLE: Riddle 2: I am always coming, but never arrive... What am I?
+[2025-05-17 12:27:55] PROMPT: Your answer? > 
+[2025-05-17 12:28:06] PLAYER_CMD (SPECIAL): tomorrow
+[2025-05-17 12:28:06] GAME_EVENT: Nay, that's not it. Try again. (2 attempts left for this riddle)
+[2025-05-17 12:28:06] PROMPT: Your answer? > 
+[2025-05-17 12:28:50] PLAYER_CMD (SPECIAL): horizon
+[2025-05-17 12:28:50] GAME_EVENT: Correct!
+[2025-05-17 12:28:50] RIDDLE: Riddle 3: What has a neck without a head... What am I?
+[2025-05-17 12:28:50] PROMPT: Your answer? > 
+[2025-05-17 12:28:55] PLAYER_CMD (SPECIAL): bottle
+[2025-05-17 12:28:55] GAME_EVENT: Correct!
+[2025-05-17 12:28:55] GAME_EVENT: Impressive! You've got a sharp mind. They give you a [Mystic Lens].
+[2025-05-17 12:28:55] GAME_EVENT: Prisoner: 'We heard the Captain scribbling in his diary... something about a secret.'
+[2025-05-17 12:29:03] PLAYER_CMD: us diary
+[2025-05-17 12:29:03] GAME_ERROR: Unknown command: 'us'
+[2025-05-17 12:29:05] PLAYER_CMD: use diary
+[2025-05-17 12:29:05] GAME_EVENT: You hold the Mystic Lens over the diary. The strange symbols resolve into clear text!
+[2025-05-17 12:29:05] GAME_EVENT: Diary: 'My heart's true north, her name the key... What is her name?'
+[2025-05-17 12:29:05] PROMPT: Enter her name: > 
+[2025-05-17 12:29:14] PLAYER_CMD (SPECIAL): esmeralda
+[2025-05-17 12:29:14] GAME_EVENT: Correct! The diary pages shimmer: 'The code to my chest is her name: ESMERALDA'.
+[2025-05-17 12:29:20] PLAYER_CMD: north
+[2025-05-17 12:29:20] GAME_ERROR: You can't go that way.
+[2025-05-17 12:29:23] PLAYER_CMD: look
+[2025-05-17 12:29:23] INFO: 
+--- Prison Hold ---
+[2025-05-17 12:29:23] INFO: You are back in the Prison Hold.
+[2025-05-17 12:29:23] INFO: The room is empty of notable items.
+[2025-05-17 12:29:23] INFO: Exits: West 
+[2025-05-17 12:29:27] PLAYER_CMD: West
+[2025-05-17 12:29:27] INFO: 
+--- Captain's Quarters ---
+[2025-05-17 12:29:27] INFO: You are back in the Captain's Quarters.
+[2025-05-17 12:29:27] INFO: The room is empty of notable items.
+[2025-05-17 12:29:27] INFO: Exits: North South East 
+[2025-05-17 12:29:31] PLAYER_CMD: look
+[2025-05-17 12:29:31] INFO: 
+--- Captain's Quarters ---
+[2025-05-17 12:29:31] INFO: You are back in the Captain's Quarters.
+[2025-05-17 12:29:31] INFO: The room is empty of notable items.
+[2025-05-17 12:29:31] INFO: Exits: North South East 
+[2025-05-17 12:29:33] PLAYER_CMD: North
+[2025-05-17 12:29:33] GAME_INFO: The massive door to the treasure room is sealed with an intricate lock. It won't budge.
+[2025-05-17 12:29:39] PLAYER_CMD: use key
+[2025-05-17 12:29:39] GAME_ERROR: You can't use 'key' that way or it does nothing here.
+[2025-05-17 12:29:42] PLAYER_CMD: use lock
+[2025-05-17 12:29:42] GAME_ERROR: You can't use 'lock' that way or it does nothing here.
+[2025-05-17 12:29:57] PLAYER_CMD: i
+[2025-05-17 12:29:57] INFO: You are carrying: [sword], [diary], [lens]
+[2025-05-17 12:30:01] PLAYER_CMD: diary
+[2025-05-17 12:30:01] GAME_ERROR: Unknown command: 'diary'
+[2025-05-17 12:30:03] PLAYER_CMD: use diary
+[2025-05-17 12:30:03] GAME_INFO: You've already read the important parts. It mentioned 'Esmeralda' and the code 'ESMERALDA'.
+[2025-05-17 12:30:08] PLAYER_CMD: ESMERALDA
+[2025-05-17 12:30:08] GAME_ERROR: Unknown command: 'esmeralda'
+[2025-05-17 12:30:14] PLAYER_CMD: look
+[2025-05-17 12:30:14] INFO: 
+--- Captain's Quarters ---
+[2025-05-17 12:30:14] INFO: You are back in the Captain's Quarters.
+[2025-05-17 12:30:14] INFO: The room is empty of notable items.
+[2025-05-17 12:30:14] INFO: Exits: North South East 
+[2025-05-17 12:30:16] PLAYER_CMD: North
+[2025-05-17 12:30:16] GAME_INFO: The massive door to the treasure room is sealed with an intricate lock. It won't budge.
+[2025-05-17 12:31:32] PLAYER_CMD: open chest
+[2025-05-17 12:31:32] PROMPT: The chest has a combination lock. Enter the code: > 
+[2025-05-17 12:31:36] PLAYER_CMD (SPECIAL): ESMERALDA
+[2025-05-17 12:31:36] GAME_EVENT: CLICK! The lock springs open. Inside is a gleaming [TreasureKey]!
+[2025-05-17 12:32:09] PLAYER_CMD: examine
+[2025-05-17 12:32:09] GAME_ERROR: Examine what?
+[2025-05-17 12:32:14] PLAYER_CMD: examine TreasureKey
+[2025-05-17 12:32:14] EXAMINE: This must be the key to the treasure!
+[2025-05-17 12:32:19] PLAYER_CMD: pick up TreasureKey
+[2025-05-17 12:32:19] ACTION: You picked up the treasurekey.
+[2025-05-17 12:32:21] PLAYER_CMD: North
+[2025-05-17 12:32:21] GAME_INFO: You use the Treasure Key. With a satisfying thunk, the heavy door unlatches!
+[2025-05-17 12:32:21] INFO: 
+--- Treasure Room ---
+[2025-05-17 12:32:21] INFO: Piles of gold coins, chests overflowing with jewels, ancient artifacts, and all manner of glittering plunder fill the room!
+[2025-05-17 12:32:21] INFO: The room is empty of notable items.
+[2025-05-17 12:32:21] INFO: There are no obvious exits.
+[2025-05-17 12:32:21] GAME_EVENT: YOU HAVE FOUND THE TREASURE!
+[2025-05-17 12:32:21] SYSTEM: Game finished with a win.
+[2025-05-17 12:32:21] SYSTEM: Game client ended.

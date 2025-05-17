@@ -12,11 +12,10 @@ void handle_drop(GameState* gs, const char* item_name_str);
 void handle_inventory(GameState* gs);
 void handle_use(GameState* gs, const char* item_name_str);
 void handle_open_chest(GameState* gs);
-
-void process_special_input(GameState* gs, const char* input);
-
+void process_special_input(GameState* gs, const char* raw_input);
 void handle_game_over(GameState* gs, const char* message, const char* art_key);
 void handle_win_game(GameState* gs);
 void restart_game_flow(GameState* gs);
+void handle_hint(GameState* gs);
 
 #endif // GAME_LOGIC_H

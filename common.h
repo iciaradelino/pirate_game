@@ -12,15 +12,18 @@
 #include <windows.h>
 #define CLEAR_SCREEN() system("cls")
 #define SLEEP_MS(ms) Sleep(ms)
+#define PATH_MAX MAX_PATH
 #else
 #include <unistd.h> // For usleep
+#include <limits.h> // For PATH_MAX
 #define CLEAR_SCREEN() system("clear")
 #define SLEEP_MS(ms) usleep(ms * 1000) // usleep takes microseconds
 #endif
 
 #define MAX_LINE_LENGTH 256
 #define LOG_FILENAME "game_log.txt"
-#define MAP_FILENAME "../ascii/map.txt" // Path to the map file
+#define MAP_FILENAME "ascii/map.txt" // Path to the map file
+#define SWING_ANIMATION_FILENAME "ascii/swing_animation_frames.txt" // Path for animation
 
 // Forward declaration for GameState to avoid circular dependencies in some utils
 typedef struct GameState GameState;

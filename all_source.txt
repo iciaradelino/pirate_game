@@ -21,7 +21,7 @@ void display_help_message(GameState* gs); // For logging
 
 #include "common.h" // For GameState forward dec
 
-#define ANIMATION_FILENAME "./ascii/swing_animation_frames.txt"
+#define SWING_ANIMATION_FILENAME "./ascii/swing_animation_frames.txt"
 #define FRAME_DELIMITER "---FRAME_END---"
 #define MAX_FRAME_LINES 50  // Max number of lines a frame can have
 
@@ -604,7 +604,7 @@ void process_special_input(GameState* gs, const char* raw_input) {
     else if (strcmp(gs->special_prompt_context, "INTRO_CONTINUE") == 0) {
         if (strcmp(input, "continue") == 0) {
             log_action(gs, "ACTION", "You decide to board the galleon...");
-            run_animation(ANIMATION_FILENAME, gs); // ANIMATION_FILENAME is from animation.h
+            run_animation(SWING_ANIMATION_FILENAME, gs); // ANIMATION_FILENAME is from animation.h
             gs->player.current_room_id = ROOM_DECK;
             show_room_description(gs);
             gs->special_prompt_active = 0;

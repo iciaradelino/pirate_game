@@ -1,6 +1,32 @@
 #include "common.h" // For MAP_FILENAME and other common definitions
 #include "utils.h"
 #include "game_state.h" // Needs full GameState definition for gs->log_file
+#include <unistd.h> // For getcwd
+
+// Function to get absolute path based on current working directory
+char* get_absolute_path(const char* relative_path) {
+    static char abs_path[PATH_MAX]; // Use static buffer to avoid heap allocation
+    
+    // Hardcode the base project directory to ensure resources are found regardless of where
+    // the executable is run from
+    const char* project_dir = "/Users/inventure71/VSProjects/pirate_game";
+    
+    // Construct absolute path: project_dir + "/" + relative_path
+    snprintf(abs_path, PATH_MAX, "%s/%s", project_dir, relative_path);
+    
+    // Debug: Check if directory exists
+    char dir_check[PATH_MAX];
+    snprintf(dir_check, PATH_MAX, "%s/ascii", project_dir);
+    FILE* test = fopen(dir_check, "r");
+    if (!test) {
+        printf("DEBUG: Directory %s does not exist or cannot be accessed\n", dir_check);
+    } else {
+        fclose(test);
+        printf("DEBUG: Directory %s exists and is accessible\n", dir_check);
+    }
+    
+    return abs_path;
+}
 
 void log_action(GameState* gs, const char* action_type, const char* message) {
     time_t now = time(NULL);
@@ -45,10 +71,13 @@ void display_ascii_art(const char* art_name) {
 }
 
 void display_map(GameState* gs) {
-    FILE *fp = fopen(MAP_FILENAME, "r");
+    // Get absolute path for the map file
+    char* abs_path = get_absolute_path(MAP_FILENAME);
+    
+    FILE *fp = fopen(abs_path, "r");
     if (!fp) {
         char err_msg[MAX_LINE_LENGTH + 100];
-        sprintf(err_msg, "Failed to open map file (%s).", MAP_FILENAME);
+        sprintf(err_msg, "Failed to open map file: %s (File does not exist or cannot be accessed)", abs_path);
         log_action(gs, "SYSTEM_ERROR", err_msg);
         perror("fopen map");
         print_to_console("Map file not found or unreadable.");

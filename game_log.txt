@@ -450,3 +450,9 @@
 [2025-05-17 12:32:21] GAME_EVENT: YOU HAVE FOUND THE TREASURE!
 [2025-05-17 12:32:21] SYSTEM: Game finished with a win.
 [2025-05-17 12:32:21] SYSTEM: Game client ended.
+[2025-05-17 13:06:50] SYSTEM: Log file opened.
+[2025-05-17 13:06:50] SYSTEM: Game client started.
+[2025-05-17 13:06:50] SYSTEM: Restarting game / Starting new game...
+[2025-05-17 13:06:50] INFO: Help message displayed to player.
+[2025-05-17 13:06:50] STORY: You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...
+[2025-05-17 13:06:50] PROMPT: Type 'continue' to board the ship. > 

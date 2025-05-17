@@ -20,7 +20,7 @@
 
 #define MAX_LINE_LENGTH 256
 #define LOG_FILENAME "game_log.txt"
-#define MAP_FILENAME "../ascii/map.txt" // Path to the map file
+#define MAP_FILENAME "ascii/map.txt" // Path to the map file
 
 // Forward declaration for GameState to avoid circular dependencies in some utils
 typedef struct GameState GameState;

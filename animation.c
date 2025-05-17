@@ -1,11 +1,16 @@
 #include "animation.h"
-#include "utils.h" // For log_action (needs full GameState)
+#include "utils.h" // For log_action, get_absolute_path
 #include "game_state.h" // For full GameState for log_action
 
 int run_animation(const char* filename, GameState* gs) {
-    FILE *fp = fopen(filename, "r");
+    // Get absolute path for the animation file
+    char* abs_path = get_absolute_path(filename);
+    
+    FILE *fp = fopen(abs_path, "r");
     if (!fp) {
-        log_action(gs, "SYSTEM_ERROR", "Failed to open animation file.");
+        char error_msg[MAX_LINE_LENGTH * 2];
+        sprintf(error_msg, "Failed to open animation file: %s", abs_path);
+        log_action(gs, "SYSTEM_ERROR", error_msg);
         perror("fopen animation");
         return 1; // Error
     }

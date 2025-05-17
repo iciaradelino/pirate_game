@@ -11,5 +11,6 @@ void to_lower_str(char* str);
 void display_ascii_art(const char* art_name);
 void display_help_message(GameState* gs); // For logging
 void display_map(GameState* gs); // Added for map display
+char* get_absolute_path(const char* relative_path); // Returns absolute path from current directory
 
 #endif // UTILS_H

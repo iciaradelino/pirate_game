@@ -1,6 +1,25 @@
 #include "common.h" // For MAP_FILENAME and other common definitions
 #include "utils.h"
 #include "game_state.h" // Needs full GameState definition for gs->log_file
+#include <unistd.h> // For getcwd
+
+// Function to get absolute path based on current working directory
+char* get_absolute_path(const char* relative_path) {
+    static char abs_path[PATH_MAX]; // Use static buffer to avoid heap allocation
+    
+    // Get current working directory
+    char cwd[PATH_MAX];
+    if (getcwd(cwd, sizeof(cwd)) == NULL) {
+        // If getcwd fails, fall back to relative path
+        strncpy(abs_path, relative_path, PATH_MAX - 1);
+        abs_path[PATH_MAX - 1] = '\0';
+        return abs_path;
+    }
+    
+    // Construct absolute path: cwd + "/" + relative_path
+    snprintf(abs_path, PATH_MAX, "%s/%s", cwd, relative_path);
+    return abs_path;
+}
 
 void log_action(GameState* gs, const char* action_type, const char* message) {
     time_t now = time(NULL);
@@ -45,10 +64,13 @@ void display_ascii_art(const char* art_name) {
 }
 
 void display_map(GameState* gs) {
-    FILE *fp = fopen(MAP_FILENAME, "r");
+    // Get absolute path for the map file
+    char* abs_path = get_absolute_path(MAP_FILENAME);
+    
+    FILE *fp = fopen(abs_path, "r");
     if (!fp) {
         char err_msg[MAX_LINE_LENGTH + 100];
-        sprintf(err_msg, "Failed to open map file (%s).", MAP_FILENAME);
+        sprintf(err_msg, "Failed to open map file: %s", abs_path);
         log_action(gs, "SYSTEM_ERROR", err_msg);
         perror("fopen map");
         print_to_console("Map file not found or unreadable.");

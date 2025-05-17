@@ -536,7 +536,7 @@ void handle_hint(GameState* gs) {
             }
             break;
         case ROOM_FRIDGE:
-            strcat(hint_message, "This pantry should have the ingredients the Cook needs. Look for [Salted Pork] (pork), [Hardtack Biscuits] (biscuits), and a [Grog Bottle] (grog). Use 'pick up [item]' for each.");
+            strcat(hint_message, "This chilly fridge should have the ingredients the Cook needs. Look for [Salted Pork] (pork), [Hardtack Biscuits] (biscuits), and a [Grog Bottle] (grog). Use 'pick up [item]' for each. The only exit is [North] to the Galley.");
             break;
         case ROOM_CAPTAIN_QUARTERS:
             if (!gs->chest_unlocked) {

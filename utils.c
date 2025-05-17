@@ -43,15 +43,40 @@ void display_ascii_art(const char* art_name) {
     }
 }
 
+void display_map(GameState* gs) {
+    FILE *fp = fopen("ascii/map.txt", "r");
+    if (!fp) {
+        log_action(gs, "SYSTEM_ERROR", "Failed to open map file (ascii/map.txt).");
+        perror("fopen map");
+        print_to_console("Map file not found or unreadable. Please create ascii/map.txt");
+        return;
+    }
+
+    char line[MAX_LINE_LENGTH * 2]; // Allow for potentially wider map lines
+    print_to_console("\n--- MAP ---");
+    while (fgets(line, sizeof(line), fp)) {
+        // Don't use log_action for each line of the map, just print directly
+        // to avoid cluttering the log and for direct console output.
+        printf("%s", line); // fgets keeps the newline if space allows
+    }
+    print_to_console("-----------");
+    fflush(stdout); // Ensure map is printed immediately
+
+    fclose(fp);
+    if (gs) { // Check if gs is valid before logging
+      log_action(gs, "INFO", "Map displayed to player.");
+    }
+}
+
 void display_help_message(GameState* gs) {
     const char* help_text =
         "----------------------------------------------------------------------\n"
-        "Welcome to The Buccaneer's Cipher!\n"
+        "Welcome to The Buccaneer\'s Cipher!\n"
         "Your goal is to explore the pirate ship, solve puzzles, and find the treasure.\n"
         "\n"
         "HOW TO PLAY:\n"
         " - Type commands and press Enter.\n"
-        " - Commands are usually 1 or 2 words (e.g., 'look', 'pick up sword').\n"
+        " - Commands are usually 1 or 2 words (e.g., \'look\', \'pick up sword\').\n"
         " - Pay attention to item names in room descriptions, often shown in [brackets].\n"
         "\n"
         "BASIC COMMANDS:\n"
@@ -62,15 +87,16 @@ void display_help_message(GameState* gs) {
         "    west (or w)      - Move west\n"
         "  Interaction:\n"
         "    look             - Describe your current room and visible items/exits.\n"
-        "    look at [item]   - Examine an item more closely (e.g., 'look at sword').\n"
-        "    examine [item]   - Same as 'look at [item]'.\n"
-        "    pick up [item]   - Add an item to your inventory (e.g., 'pick up key').\n"
-        "    take [item]      - Same as 'pick up [item]'.\n"
+        "    look at [item]   - Examine an item more closely (e.g., \'look at sword\').\n"
+        "    examine [item]   - Same as \'look at [item]\'.\n"
+        "    pick up [item]   - Add an item to your inventory (e.g., \'pick up key\').\n"
+        "    take [item]      - Same as \'pick up [item]\'.\n"
         "    drop [item]      - Remove an item from inventory and place it in the room.\n"
         "    inventory (or i) - Show what items you are carrying.\n"
         "    use [item]       - Use an item, sometimes on another object or character\n"
-        "                       (e.g., 'use key', 'use cook', 'use diary').\n"
-        "    open [item]      - Try to open something (e.g., 'open chest').\n"
+        "                       (e.g., \'use key\', \'use cook\', \'use diary\').\n"
+        "    open [item]      - Try to open something (e.g., \'open chest\').\n"
+        "    map              - Display the game map.\n"
         "  Game:\n"
         "    help             - Display this help message again.\n"
         "    quit             - Exit the game.\n"

@@ -112,3 +112,126 @@
 [2025-05-12 13:35:43] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
 [2025-05-12 13:35:43] INFO: You see: [sword], [parrot], [portrait]
 [2025-05-12 13:35:43] INFO: Exits: East 
+[2025-05-17 12:11:30] SYSTEM: Log file opened.
+[2025-05-17 12:11:31] SYSTEM: Game client started.
+[2025-05-17 12:11:31] SYSTEM: Restarting game / Starting new game...
+[2025-05-17 12:11:31] INFO: Help message displayed to player.
+[2025-05-17 12:11:31] STORY: You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...
+[2025-05-17 12:11:31] PROMPT: Type 'continue' to board the ship. > 
+[2025-05-17 12:12:35] PLAYER_CMD (SPECIAL): continue
+[2025-05-17 12:12:35] ACTION: You decide to board the galleon...
+[2025-05-17 12:12:39] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-17 12:12:39] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-17 12:12:39] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-17 12:12:39] INFO: Exits: East 
+[2025-05-17 12:12:44] PLAYER_CMD: help
+[2025-05-17 12:12:44] INFO: Help message displayed to player.
+[2025-05-17 12:12:50] PLAYER_CMD: look
+[2025-05-17 12:12:50] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-17 12:12:50] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-17 12:12:50] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-17 12:12:50] INFO: Exits: East 
+[2025-05-17 12:12:58] PLAYER_CMD: take sword
+[2025-05-17 12:12:58] ACTION: You picked up the sword.
+[2025-05-17 12:13:02] PLAYER_CMD: take portrait
+[2025-05-17 12:13:02] GAME_ERROR: You can't pick up the portrait.
+[2025-05-17 12:13:10] PLAYER_CMD: look at portrait
+[2025-05-17 12:13:10] EXAMINE: A faded portrait of a stern-looking woman. A small plaque beneath reads 'Esmeralda, his guiding star.'
+[2025-05-17 12:13:26] PLAYER_CMD: n
+[2025-05-17 12:13:26] GAME_ERROR: You can't go that way.
+[2025-05-17 12:13:33] PLAYER_CMD: look
+[2025-05-17 12:13:33] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-17 12:13:33] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-17 12:13:33] INFO: You see: [parrot], [portrait]
+[2025-05-17 12:13:33] INFO: Exits: East 
+[2025-05-17 12:13:37] PLAYER_CMD: East
+[2025-05-17 12:13:37] INFO: 
+--- The Galley ---
+[2025-05-17 12:13:37] INFO: The cramped galley smells of stale food and rum. A grumpy-looking Cook stirs a bubbling pot. There's a door to the south leading to a cold storage area, and another door north.
+[2025-05-17 12:13:37] INFO: The room is empty of notable items.
+[2025-05-17 12:13:37] INFO: Exits: North South West 
+[2025-05-17 12:16:19] SYSTEM: Log file opened.
+[2025-05-17 12:16:19] SYSTEM: Game client started.
+[2025-05-17 12:16:19] SYSTEM: Restarting game / Starting new game...
+[2025-05-17 12:16:19] INFO: Help message displayed to player.
+[2025-05-17 12:16:19] STORY: You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...
+[2025-05-17 12:16:19] PROMPT: Type 'continue' to board the ship. > 
+[2025-05-17 12:16:25] PLAYER_CMD (SPECIAL): continue
+[2025-05-17 12:16:25] ACTION: You decide to board the galleon...
+[2025-05-17 12:16:29] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-17 12:16:29] INFO: You are on the weathered deck of the pirate ship. Salt spray mists the air. You see a weathered mast, coiled ropes, and a door leading further into the ship.
+[2025-05-17 12:16:29] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-17 12:16:29] INFO: Exits: East 
+[2025-05-17 12:16:37] PLAYER_CMD: pick up sword
+[2025-05-17 12:16:37] ACTION: You picked up the sword.
+[2025-05-17 12:16:40] PLAYER_CMD: East
+[2025-05-17 12:16:40] INFO: 
+--- The Galley ---
+[2025-05-17 12:16:40] INFO: The cramped galley smells of stale food and rum. A grumpy-looking Cook stirs a bubbling pot. There's a door to the south leading to a cold storage area, and another door north.
+[2025-05-17 12:16:40] INFO: The room is empty of notable items.
+[2025-05-17 12:16:40] INFO: Exits: North South West 
+[2025-05-17 12:16:49] PLAYER_CMD: North
+[2025-05-17 12:16:49] GAME_INFO: The Cook blocks your path north. 'Not until ye fetch me ingredients, matey!'
+[2025-05-17 12:16:53] PLAYER_CMD: South
+[2025-05-17 12:16:53] INFO: 
+--- Fridge Room (Pantry) ---
+[2025-05-17 12:16:53] INFO: A chilly room, lined with shelves. Various foodstuffs are stored here.
+[2025-05-17 12:16:53] INFO: You see: [pork], [biscuits], [grog], [fish]
+[2025-05-17 12:16:53] INFO: Exits: North 
+[2025-05-17 12:17:53] PLAYER_CMD: pick up pork
+[2025-05-17 12:17:53] ACTION: You picked up the pork.
+[2025-05-17 12:17:56] PLAYER_CMD: pick up biscuits
+[2025-05-17 12:17:56] ACTION: You picked up the biscuits.
+[2025-05-17 12:17:59] PLAYER_CMD: pick up grog
+[2025-05-17 12:17:59] ACTION: You picked up the grog.
+[2025-05-17 12:18:05] PLAYER_CMD: look
+[2025-05-17 12:18:05] INFO: 
+--- Fridge Room (Pantry) ---
+[2025-05-17 12:18:05] INFO: You are back in the Fridge Room (Pantry).
+[2025-05-17 12:18:05] INFO: You see: [fish]
+[2025-05-17 12:18:05] INFO: Exits: North 
+[2025-05-17 12:18:08] PLAYER_CMD: North
+[2025-05-17 12:18:08] INFO: 
+--- The Galley ---
+[2025-05-17 12:18:08] INFO: You are back in the The Galley.
+[2025-05-17 12:18:08] INFO: The room is empty of notable items.
+[2025-05-17 12:18:08] INFO: Exits: North South West 
+[2025-05-17 12:18:12] PLAYER_CMD: North
+[2025-05-17 12:18:12] GAME_INFO: The Cook blocks your path north. 'Not until ye fetch me ingredients, matey!'
+[2025-05-17 12:18:18] PLAYER_CMD: use cook
+[2025-05-17 12:18:18] GAME_EVENT: You give the Salted Pork, Hardtack Biscuits, and Grog Bottle to the Cook.
+[2025-05-17 12:18:18] GAME_EVENT: Cook: 'Hah! Not entirely useless, are ye? Right then, the Captain's stew it is! You can pass north now.'
+[2025-05-17 12:19:33] PLAYER_CMD: north
+[2025-05-17 12:19:33] INFO: 
+--- Captain's Quarters ---
+[2025-05-17 12:19:33] INFO: A lavishly decorated cabin. A large Captain figure lies snoring on a rug. A grand desk holds a leather-bound [Diary]. A sturdy [Chest] sits in the corner. There's a barred door to the east.
+[2025-05-17 12:19:33] INFO: You see: [diary]
+[2025-05-17 12:19:33] INFO: Exits: North South East 
+[2025-05-17 12:19:44] PLAYER_CMD: pick up diary
+[2025-05-17 12:19:44] ACTION: You picked up the diary.
+[2025-05-17 12:19:46] PLAYER_CMD: examine diary
+[2025-05-17 12:19:46] EXAMINE: A heavy, locked diary. It seems important.
+[2025-05-17 12:19:52] PLAYER_CMD: use diary
+[2025-05-17 12:19:52] GAME_INFO: You might need something special to decipher it.
+[2025-05-17 12:20:24] PLAYER_CMD: look
+[2025-05-17 12:20:24] INFO: 
+--- Captain's Quarters ---
+[2025-05-17 12:20:24] INFO: You are back in the Captain's Quarters.
+[2025-05-17 12:20:24] INFO: The room is empty of notable items.
+[2025-05-17 12:20:24] INFO: Exits: North South East 
+[2025-05-17 12:20:29] PLAYER_CMD: East
+[2025-05-17 12:20:29] INFO: 
+--- Prison Hold ---
+[2025-05-17 12:20:29] INFO: A dark, damp hold. Three shadowy Prisoners look agitated.
+[2025-05-17 12:20:29] INFO: The room is empty of notable items.
+[2025-05-17 12:20:29] INFO: Exits: West 
+[2025-05-17 12:20:29] GAME_EVENT: You open the door to a dark, damp hold. Three shadowy Prisoners lunge at you with makeshift shivs!
+[2025-05-17 12:20:29] PROMPT: The prisoners are about to attack! What do you do? > 
+[2025-05-17 12:20:39] PLAYER_CMD (SPECIAL): use knife
+[2025-05-17 12:20:39] GAME_EVENT: You hesitate or do the wrong thing!
+[2025-05-17 12:20:39] GAME_EVENT: Without a weapon to defend yourself, the prisoners overwhelm you.
+[2025-05-17 12:20:39] PROMPT: Game Over. Play again? (yes/no) > 

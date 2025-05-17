@@ -10,5 +10,6 @@ void print_to_console(const char* message); // Simple wrapper if needed, or just
 void to_lower_str(char* str);
 void display_ascii_art(const char* art_name);
 void display_help_message(GameState* gs); // For logging
+void display_map(GameState* gs); // Added for map display
 
 #endif // UTILS_H

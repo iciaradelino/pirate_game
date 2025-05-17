@@ -93,7 +93,7 @@ void handle_move(GameState* gs, const char* direction_str) {
     if (next_room_id != NUM_ROOMS) {
         // Pre-entry checks
         if (next_room_id == ROOM_CAPTAIN_QUARTERS && !gs->cook_pleased && gs->player.current_room_id == ROOM_GALLEY) {
-            log_action(gs, "GAME_INFO", "The Cook blocks your path north. 'Not until ye fetch me ingredients, matey!'");
+            log_action(gs, "GAME_INFO", "The Cook blocks your path north. 'Not until ye fetch me ingredients, matey! I need some [Salted Pork], [Hardtack Biscuits], and a [Grog Bottle] for the Captain\'s stew.'");
             return;
         }
         if (next_room_id == ROOM_CAPTAIN_QUARTERS && player_has_item(&gs->player, ITEM_PARROT)) {
@@ -392,13 +392,22 @@ void process_special_input(GameState* gs, const char* raw_input) {
     to_lower_str(input); // Processed input is lowercase
 
     if (strcmp(gs->special_prompt_context, "PRISONER_ATTACK") == 0) {
-        // "use sword" is handled by the main command parser now, this is fallback
-        if (!(strncmp(input, "use sword", 9) == 0)) { // Check if command starts with "use sword"
-             log_action(gs, "GAME_EVENT", "You hesitate or do the wrong thing!");
-             handle_game_over(gs, "Without a weapon to defend yourself, the prisoners overwhelm you.", "GAME_OVER_PRISONERS");
+        int used_correct_weapon = 0;
+        // Input is already lowercased and includes the full command e.g., "use sword"
+        if (strcmp(input, "use sword") == 0 && player_has_item(&gs->player, ITEM_SWORD)) {
+            used_correct_weapon = 1;
+        } else if (strcmp(input, "use knife") == 0 && player_has_item(&gs->player, ITEM_SWORD)) {
+            // Player typed "use knife" and has a sword, which we treat as the intended weapon.
+            // The game currently only has ITEM_SWORD, so "knife" acts as an alias here.
+            used_correct_weapon = 1;
         }
-         // If "use sword" was typed, it would be handled by `handle_use` which clears special prompt.
-         // If it wasn't, and we are still in special prompt, it means something else was typed.
+
+        if (used_correct_weapon) {
+            handle_use_sword_for_prisoners(gs); // This function will clear special_prompt_active
+        } else {
+            log_action(gs, "GAME_EVENT", "You fumble or try the wrong action!");
+            handle_game_over(gs, "The prisoners don\'t wait for you to get your weapon right and overwhelm you.", "GAME_OVER_PRISONERS");
+        }
     }
     else if (strncmp(gs->special_prompt_context, "RIDDLE_ANSWER_", strlen("RIDDLE_ANSWER_")) == 0) {
         int riddle_num = gs->current_riddle_idx;

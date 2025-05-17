@@ -1,2 +1,6 @@
 game_log.txt
 dist
+dist/*
+
+*/dist/*
+/dist

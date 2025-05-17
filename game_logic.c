@@ -1,3 +1,4 @@
+// filepath: /Users/inventure71/VSProjects/pirate_game/game_logic.c
 #include "game_logic.h"
 #include "item.h"
 #include "room.h"
@@ -489,7 +490,7 @@ void process_special_input(GameState* gs, const char* raw_input) {
     else if (strcmp(gs->special_prompt_context, "INTRO_CONTINUE") == 0) {
         if (strcmp(input, "continue") == 0) {
             log_action(gs, "ACTION", "You decide to board the galleon...");
-            run_animation(ANIMATION_FILENAME, gs); // ANIMATION_FILENAME is from animation.h
+            run_animation(SWING_ANIMATION_FILENAME, gs); // Animation filename from common.h
             gs->player.current_room_id = ROOM_DECK;
             show_room_description(gs);
             gs->special_prompt_active = 0;

@@ -116,6 +116,7 @@ void handle_move(GameState* gs, const char* direction_str) {
 
         gs->player.current_room_id = next_room_id;
         // gs->rooms[next_room_id].visited = 0; // Reset visited if you want full description always on entry
+        display_map(gs); // Display map before room description
         show_room_description(gs);
 
         // Post-entry events

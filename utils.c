@@ -56,19 +56,14 @@ void display_map(GameState* gs) {
     }
 
     char line[MAX_LINE_LENGTH * 2]; // Allow for potentially wider map lines
-    print_to_console("\n--- MAP ---");
     while (fgets(line, sizeof(line), fp)) {
         // Don't use log_action for each line of the map, just print directly
         // to avoid cluttering the log and for direct console output.
         printf("%s", line); // fgets keeps the newline if space allows
     }
-    print_to_console("-----------");
     fflush(stdout); // Ensure map is printed immediately
 
     fclose(fp);
-    if (gs) { // Check if gs is valid before logging
-      log_action(gs, "INFO", "Map displayed to player.");
-    }
 }
 
 void display_help_message(GameState* gs) {

@@ -1,2 +1,10 @@
 game_log.txt
+<<<<<<< HEAD
 dist/
+=======
+dist
+dist/*
+
+*/dist/*
+/dist
+>>>>>>> origin/main

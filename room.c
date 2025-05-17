@@ -60,9 +60,9 @@ void init_rooms(GameState* gs) { // Signature changed
     };
 
     // ROOM_FRIDGE
-    gs->rooms[ROOM_FRIDGE] = (Room){ROOM_FRIDGE, "Fridge Room (Pantry)",
-        "A chilly pantry, lined with shelves. Various foodstuffs are stored here, including [Salted Pork], [Hardtack Biscuits], a [Grog Bottle], and some less appetizing [Rotten Fish]. The only exit is [North] back to the Galley.",
-        {NUM_ROOMS, NUM_ROOMS, NUM_ROOMS, NUM_ROOMS},
+    gs->rooms[ROOM_FRIDGE] = (Room){ROOM_FRIDGE, "Fridge",
+        "A chilly fridge, lined with shelves. Various foodstuffs are stored here, including [Salted Pork], [Hardtack Biscuits], a [Grog Bottle], and some less appetizing [Rotten Fish]. The only exit is [North] back to the Galley.",
+        {ROOM_GALLEY, NUM_ROOMS, NUM_ROOMS, NUM_ROOMS}, // N, S, E, W - North to Galley
         {ITEM_NONE}, 0, 0
     };
     add_item_to_room(&gs->rooms[ROOM_FRIDGE], ITEM_SALTED_PORK);

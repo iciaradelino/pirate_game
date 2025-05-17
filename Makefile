@@ -19,6 +19,10 @@ copy_resources: | dist
 	cp -r ascii/* dist/ascii/
 
 clean:
-	rm -rf dist
+ifeq ($(OS),Windows_NT)
+	cmd /c del /F /Q dist\\*.o dist\\pirate_adventure dist\\game_log.txt
+else
+	rm -f dist/*.o dist/pirate_adventure dist/game_log.txt
+endif
 
 .PHONY: all clean

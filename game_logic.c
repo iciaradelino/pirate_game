@@ -117,6 +117,7 @@ void handle_move(GameState* gs, const char* direction_str) {
 
         gs->player.current_room_id = next_room_id;
         // gs->rooms[next_room_id].visited = 0; // Reset visited if you want full description always on entry
+        display_map(gs); // Display map before room description
         show_room_description(gs);
 
         // Post-entry events
@@ -536,7 +537,7 @@ void handle_hint(GameState* gs) {
             }
             break;
         case ROOM_FRIDGE:
-            strcat(hint_message, "This pantry should have the ingredients the Cook needs. Look for [Salted Pork] (pork), [Hardtack Biscuits] (biscuits), and a [Grog Bottle] (grog). Use 'pick up [item]' for each.");
+            strcat(hint_message, "This chilly fridge should have the ingredients the Cook needs. Look for [Salted Pork] (pork), [Hardtack Biscuits] (biscuits), and a [Grog Bottle] (grog). Use 'pick up [item]' for each. The only exit is [North] to the Galley.");
             break;
         case ROOM_CAPTAIN_QUARTERS:
             if (!gs->chest_unlocked) {

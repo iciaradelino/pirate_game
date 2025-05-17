@@ -2,6 +2,8 @@
 gcc main.c -o game -Wall -Wextra -std=c99
 ```
 
+latest.
+
 
 # Pirate Adventure Text Game
 

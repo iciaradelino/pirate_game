@@ -9,6 +9,7 @@
 
 #include <stdio.h> // For sprintf
 #include <string.h>
+#include <strings.h> // For strcasecmp on MinGW
 #include <stdlib.h> // For rand, srand
 #include <time.h>   // For time
 

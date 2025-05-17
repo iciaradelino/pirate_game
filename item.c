@@ -1,6 +1,7 @@
 #include "item.h"
 #include "game_state.h" // Needed for init_items signature
-#include <string.h> // For strcasecmp
+#include <string.h> // For general string functions
+#include <strings.h> // For strcasecmp on MinGW
 #include <stdio.h>  // For NULL if not in common.h for some reason
 
 // Define the global items array

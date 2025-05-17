@@ -16,6 +16,6 @@ dist:
 	mkdir -p dist
 
 clean:
-	rm -f dist/*.o $(TARGET) dist/game_log.txt
+	del /F /Q dist\\*.o dist\\pirate_adventure dist\\game_log.txt
 
 .PHONY: all clean

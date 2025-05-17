@@ -1,3 +1,4 @@
+#include "common.h" // For MAP_FILENAME and other common definitions
 #include "utils.h"
 #include "game_state.h" // Needs full GameState definition for gs->log_file
 
@@ -44,11 +45,13 @@ void display_ascii_art(const char* art_name) {
 }
 
 void display_map(GameState* gs) {
-    FILE *fp = fopen("ascii/map.txt", "r");
+    FILE *fp = fopen(MAP_FILENAME, "r");
     if (!fp) {
-        log_action(gs, "SYSTEM_ERROR", "Failed to open map file (ascii/map.txt).");
+        char err_msg[MAX_LINE_LENGTH + 100];
+        sprintf(err_msg, "Failed to open map file (%s).", MAP_FILENAME);
+        log_action(gs, "SYSTEM_ERROR", err_msg);
         perror("fopen map");
-        print_to_console("Map file not found or unreadable. Please create ascii/map.txt");
+        print_to_console("Map file not found or unreadable.");
         return;
     }
 

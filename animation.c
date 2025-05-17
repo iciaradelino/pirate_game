@@ -9,7 +9,7 @@ int run_animation(const char* filename, GameState* gs) {
     FILE *fp = fopen(abs_path, "r");
     if (!fp) {
         char error_msg[MAX_LINE_LENGTH * 2];
-        sprintf(error_msg, "Failed to open animation file: %s", abs_path);
+        sprintf(error_msg, "Failed to open animation file: %s (File does not exist or cannot be accessed)", abs_path);
         log_action(gs, "SYSTEM_ERROR", error_msg);
         perror("fopen animation");
         return 1; // Error

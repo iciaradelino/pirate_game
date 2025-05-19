@@ -1,94 +1,140 @@
-#include "common.h" // for MAP_FILENAME and other common definitions
+#include "common.h"
 #include "utils.h"
-#include "game_state.h" // needs full GameState definition for gs->log_file
-#include <unistd.h> // for getcwd
+#include "game_state.h"
+#include <unistd.h>
 
-// function to get absolute path based on executable's directory
-char* get_absolute_path(const char* relative_path) {
-    static char abs_path[PATH_MAX]; // use static buffer to avoid heap allocation
-    static char exe_dir[PATH_MAX] = {0}; // cache for executable directory
-    static int first_run = 1; // flag for first run checks
+char *get_absolute_path(const char *relative_path)
+{
+    static char abs_path[PATH_MAX];
+    static char exe_dir[PATH_MAX] = {0};
+    static int  first_run         = 1;
 
-    // only determine the executable directory once
-    if (exe_dir[0] == '\0') {
-        // get current working directory
-        if (getcwd(exe_dir, PATH_MAX) == NULL) {
+    if (exe_dir[0] == '\0')
+    {
+        if (getcwd(exe_dir, PATH_MAX) == NULL)
+        {
             perror("getcwd");
-            strcpy(exe_dir, "."); // fallback to current directory
+            strcpy(exe_dir, ".");
         }
-        
         printf("DEBUG: Game running from directory: %s\n", exe_dir);
     }
-    
-    // construct absolute path: exe_dir + "/" + relative_path
+
     snprintf(abs_path, PATH_MAX, "%s/%s", exe_dir, relative_path);
-    
-    // on first run, check if critical directories exist
-    if (first_run) {
+
+    if (first_run)
+    {
         char dir_check[PATH_MAX];
         snprintf(dir_check, PATH_MAX, "%s/ascii", exe_dir);
-        FILE* test = fopen(dir_check, "r");
-        if (!test) {
+        FILE *test = fopen(dir_check, "r");
+        if (!test)
+        {
             printf("WARNING: Directory %s does not exist or cannot be accessed.\n", dir_check);
             printf("Make sure game assets are in the correct location relative to the executable.\n");
-        } else {
+        }
+        else
+        {
             fclose(test);
             printf("DEBUG: Directory %s exists and is accessible\n", dir_check);
         }
         first_run = 0;
     }
-    
+
     return abs_path;
 }
 
-void log_action(GameState* gs, const char* action_type, const char* message) {
+void log_action(GameState *gs, const char *action_type, const char *message)
+{
     time_t now = time(NULL);
-    char time_str[30];
+    char   time_str[30];
     strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S", localtime(&now));
 
-    if (gs->log_file) {
+    if (gs->log_file)
+    {
         fprintf(gs->log_file, "[%s] %s: %s\n", time_str, action_type, message);
         fflush(gs->log_file);
     }
     printf("%s\n", message);
 }
 
-void print_to_console(const char* message) {
+void print_to_console(const char *message)
+{
     printf("%s\n", message);
 }
 
-void to_lower_str(char* str) {
-    if (!str) return;
-    for (int i = 0; str[i]; i++) {
+void to_lower_str(char *str)
+{
+    if (!str)
+        return;
+    for (int i = 0; str[i]; i++)
+    {
         str[i] = tolower((unsigned char)str[i]);
     }
 }
 
-void display_ascii_art(const char* art_name) {
-    if (strcmp(art_name, "GAME_OVER_COOK") == 0) {
-        print_to_console("\n   _____          __  __ ______    ______      ________ _____  \n  / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ \n | |  __   /  \\  | \\  / | |__    | |  | \\ \\  / /| |__  | |__) |\n | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / \n | |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ \n  \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\\n");
+void display_ascii_art(const char *art_name)
+{
+    if (strcmp(art_name, "GAME_OVER_COOK") == 0)
+    {
+        print_to_console(
+            "\n   _____          __  __ ______    ______      ________ _____  \n"
+            "  / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ \n"
+            " | |  __   /  \\  | \\  / | |__    | |  | \\ \\  / /| |__  | |__) |\n"
+            " | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / \n"
+            " | |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ \n"
+            "  \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\\n"
+        );
         print_to_console("The Cook didn't appreciate your offering. You've been skewered!");
-    } else if (strcmp(art_name, "GAME_OVER_CAPTAIN") == 0) {
-        print_to_console("\n   _____          __  __ ______    ______      ________ _____  \n  / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ \n | |  __   /  \\  | \\  / | |__    | |  | \\ \\  / /| |__  | |__) |\n | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / \n | |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ \n  \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\\n");
+    }
+    else if (strcmp(art_name, "GAME_OVER_CAPTAIN") == 0)
+    {
+        print_to_console(
+            "\n   _____          __  __ ______    ______      ________ _____  \n"
+            "  / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ \n"
+            " | |  __   /  \\  | \\  / | |__    | |  | \\ \\  / /| |__  | |__) |\n"
+            " | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / \n"
+            " | |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ \n"
+            "  \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\\n"
+        );
         print_to_console("The Captain was not pleased to be woken by a squawking parrot! BANG!");
-    } else if (strcmp(art_name, "GAME_OVER_PRISONERS") == 0) {
-        print_to_console("\n   _____          __  __ ______    ______      ________ _____  \n  / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ \n | |  __   /  \\  | \\  / | |__    | |  | \\ \\  / /| |__  | |__) |\n | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / \n | |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ \n  \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\\n");
+    }
+    else if (strcmp(art_name, "GAME_OVER_PRISONERS") == 0)
+    {
+        print_to_console(
+            "\n   _____          __  __ ______    ______      ________ _____  \n"
+            "  / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ \n"
+            " | |  __   /  \\  | \\  / | |__    | |  | \\ \\  / /| |__  | |__) |\n"
+            " | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / \n"
+            " | |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ \n"
+            "  \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\\n"
+        );
         print_to_console("The prisoners were not impressed. You've met a sticky end.");
-    } else if (strcmp(art_name, "WIN_GAME") == 0) {
-        print_to_console("\n__   __            _    _ _       _ \n\\ \\ / /           | |  | (_)     | |\n \\ V /___  _   _  | |  | |_ _ __ | |\n  \\ // _ \\| | | | | |/\\| | | '_ \\| |\n  | | (_) | |_| | \\  /\\  / | | | |_|\n  \\_/\\___/ \\__,_|  \\/  \\/|_|_| |_(_)\n");
+    }
+    else if (strcmp(art_name, "WIN_GAME") == 0)
+    {
+        print_to_console(
+            "\n__   __            _    _ _       _ \n"
+            "\\ \\ / /           | |  | (_)     | |\n"
+            " \\ V /___  _   _  | |  | |_ _ __ | |\n"
+            "  \\ // _ \\| | | | | |/\\| | | '_ \\| |\n"
+            "  | | (_) | |_| | \\  /\\  / | | | |_|\n"
+            "  \\_/\\___/ \\__,_|  \\/  \\/|_|_| |_(_)\n"
+        );
         print_to_console("Congratulations! You have plundered the pirate's loot and won the game!");
-    } else if (strcmp(art_name, "JUMBLED_DIARY") == 0) {
+    }
+    else if (strcmp(art_name, "JUMBLED_DIARY") == 0)
+    {
         print_to_console("~@#$%^&*()_+|}{P ريال OIUYTREWQASDFGHJKL:NBVCXZ`1234567890-=");
         print_to_console("The script is a swirling, unreadable mess of arcane symbols.");
     }
 }
 
-void display_map(GameState* gs) {
-    // get absolute path for the map file
-    char* abs_path = get_absolute_path(MAP_FILENAME);
-    
+void display_map(GameState *gs)
+{
+    char *abs_path = get_absolute_path(MAP_FILENAME);
+
     FILE *fp = fopen(abs_path, "r");
-    if (!fp) {
+    if (!fp)
+    {
         char err_msg[MAX_LINE_LENGTH + 100];
         sprintf(err_msg, "Failed to open map file: %s (File does not exist or cannot be accessed)", abs_path);
         log_action(gs, "SYSTEM_ERROR", err_msg);
@@ -98,25 +144,25 @@ void display_map(GameState* gs) {
     }
 
     char line[MAX_LINE_LENGTH * 2];
-    while (fgets(line, sizeof(line), fp)) {
-        // don't use log_action for each line of the map, just print directly
-        // to avoid cluttering the log and for direct console output.
-        printf("%s", line); // fgets keeps the newline if space allows
+    while (fgets(line, sizeof(line), fp))
+    {
+        printf("%s", line);
     }
-    fflush(stdout); // ensure map is printed immediately
+    fflush(stdout);
 
     fclose(fp);
 }
 
-void display_help_message(GameState* gs) {
-    const char* help_text =
+void display_help_message(GameState *gs)
+{
+    const char *help_text =
         "----------------------------------------------------------------------\n"
         "Welcome to Stowaway!\n"
         "Your goal is to explore the pirate ship, solve puzzles, and find the treasure.\n"
         "\n"
         "HOW TO PLAY:\n"
         " - Type commands and press Enter.\n"
-        " - Commands are usually 1 or 2 words (e.g., \'look\', \'pick up sword\').\n"
+        " - Commands are usually 1 or 2 words (e.g., 'look', 'pick up sword').\n"
         " - Pay attention to item names in room descriptions, often shown in [brackets].\n"
         "\n"
         "BASIC COMMANDS:\n"
@@ -127,15 +173,15 @@ void display_help_message(GameState* gs) {
         "    west (or w)      - Move west\n"
         "  Interaction:\n"
         "    look             - Describe your current room and visible items/exits.\n"
-        "    look at [item]   - Examine an item more closely (e.g., \'look at sword\').\n"
-        "    examine [item]   - Same as \'look at [item]\'.\n"
-        "    pick up [item]   - Add an item to your inventory (e.g., \'pick up key\').\n"
-        "    take [item]      - Same as \'pick up [item]\'.\n"
+        "    look at [item]   - Examine an item more closely (e.g., 'look at sword').\n"
+        "    examine [item]   - Same as 'look at [item]'.\n"
+        "    pick up [item]   - Add an item to your inventory (e.g., 'pick up key').\n"
+        "    take [item]      - Same as 'pick up [item]'.\n"
         "    drop [item]      - Remove an item from inventory and place it in the room.\n"
         "    inventory (or i) - Show what items you are carrying.\n"
         "    use [item]       - Use an item, sometimes on another object or character\n"
-        "                       (e.g., \'use key\', \'use cook\', \'use diary\').\n"
-        "    open [item]      - Try to open something (e.g., \'open chest\').\n"
+        "                       (e.g., 'use key', 'use cook', 'use diary').\n"
+        "    open [item]      - Try to open something (e.g., 'open chest').\n"
         "    map              - Display the game map.\n"
         "  Game:\n"
         "    help             - Display this help message again.\n"
@@ -144,54 +190,42 @@ void display_help_message(GameState* gs) {
         "    quit             - Exit the game.\n"
         "----------------------------------------------------------------------";
 
-    // log that help was displayed, but print the raw text for better formatting.
-    if (gs) { // gs might be NULL if called before game state is fully ready for logging
+    if (gs)
+    {
         log_action(gs, "INFO", "Help message displayed to player.");
     }
     printf("%s\n", help_text);
 }
 
-// opens a file with the system's default application
-int open_file_with_default_app(const char* filename) {
+int open_file_with_default_app(const char *filename)
+{
     char *abs_path = get_absolute_path(filename);
-    char command[PATH_MAX * 2];
-    int result = 0;
-    
-    // first, check if the file exists before trying to open it
+    char  command[PATH_MAX * 2];
+    int   result   = 0;
+
     FILE *test_file = fopen(abs_path, "r");
-    if (!test_file) {
+    if (!test_file)
+    {
         printf("Warning: Could not find guide file: %s\n", abs_path);
         return -1;
     }
     fclose(test_file);
 
-    // using system() can be problematic, especially on Windows, so we'll add
-    // error handling and make the command construction more robust
 #ifdef _WIN32
-    // Windows: use 'start' to open with the default application
-    // the empty quotes prevent issues with paths containing spaces
     snprintf(command, sizeof(command), "start \"\" \"%s\" >nul 2>&1", abs_path);
 #elif defined(__APPLE__) || defined(__MACH__)
-    // macOS: use 'open'
     snprintf(command, sizeof(command), "open \"%s\" >/dev/null 2>&1", abs_path);
 #else
-    // Linux/Unix: use 'xdg-open'
     snprintf(command, sizeof(command), "xdg-open \"%s\" >/dev/null 2>&1", abs_path);
 #endif
 
-    // run the command in a way that won't block the game if it fails
-    // we run it in the background to avoid hanging
 #ifdef _WIN32
-    // on Windows, system() returns the command's exit code
     result = system(command);
 #else
-    // on Unix-like systems, run the command in the background
     char bg_command[PATH_MAX * 2 + 10];
     snprintf(bg_command, sizeof(bg_command), "%s &", command);
     result = system(bg_command);
 #endif
-    
-    // no need to free abs_path as it points to a static buffer in get_absolute_path
-    
+
     return result;
 }

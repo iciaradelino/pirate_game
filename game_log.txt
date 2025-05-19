@@ -456,3 +456,67 @@
 [2025-05-17 13:06:50] INFO: Help message displayed to player.
 [2025-05-17 13:06:50] STORY: You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...
 [2025-05-17 13:06:50] PROMPT: Type 'continue' to board the ship. > 
+[2025-05-19 20:43:15] SYSTEM: Log file opened.
+[2025-05-19 20:43:15] SYSTEM: Game client started.
+[2025-05-19 20:43:15] SYSTEM: Restarting game / Starting new game...
+[2025-05-19 20:43:15] INFO: Help message displayed to player.
+[2025-05-19 20:43:16] STORY: You are adrift in a small, rickety boat... The Crimson Serpent comes closer and closer. This might be your only chance to get the gold...
+[2025-05-19 20:43:18] PROMPT: Type 'continue' to swing to the ship. > 
+[2025-05-19 20:43:19] PLAYER_CMD (SPECIAL): continue
+[2025-05-19 20:43:19] ACTION: You decide to board the galleon...
+[2025-05-19 20:43:22] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-19 20:43:22] INFO: You stand on the weathered deck of a pirate galleon. Salt spray mists the air. You see a tall, weathered mast with coiled ropes, a ship's wheel, and a sturdy door leading [East] further into the ship. A [Sword] lies discarded near the railing, a colorful [Parrot] squawks from atop a barrel, and a faded [Portrait] is nailed to the mast.
+[2025-05-19 20:43:22] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-19 20:43:22] INFO: Exits: East 
+[2025-05-19 20:43:53] PLAYER_CMD: pick up sword
+[2025-05-19 20:43:53] ACTION: You picked up the sword.
+[2025-05-19 20:43:59] PLAYER_CMD: pick up parrot
+[2025-05-19 20:43:59] ACTION: You picked up the parrot.
+[2025-05-19 20:44:05] PLAYER_CMD: exit east
+[2025-05-19 20:44:05] GAME_ERROR: Unknown command: 'exit'
+[2025-05-19 20:44:08] PLAYER_CMD: east
+[2025-05-19 20:44:09] INFO: 
+--- The Galley ---
+[2025-05-19 20:44:09] INFO: The cramped galley smells of stale food and potent rum. A grumpy-looking Cook stirs a bubbling pot, eyeing you suspiciously. A door [North] seems to lead to the Captain's private area, another door [South] likely goes to a fridge, and the way [West] returns to the Deck.
+[2025-05-19 20:44:09] INFO: The room is empty of notable items.
+[2025-05-19 20:44:09] INFO: Exits: North South West 
+[2025-05-19 21:16:33] SYSTEM: Log file opened.
+[2025-05-19 21:16:33] SYSTEM: Game client started.
+[2025-05-19 21:17:53] SYSTEM: Log file opened.
+[2025-05-19 21:17:53] SYSTEM: Game client started.
+[2025-05-19 21:17:53] SYSTEM: Game guide opened in external application.
+[2025-05-19 21:17:53] SYSTEM: Restarting game / Starting new game...
+[2025-05-19 21:17:53] INFO: Help message displayed to player.
+[2025-05-19 21:17:54] STORY: You are adrift in a small, rickety boat... The Crimson Serpent comes closer and closer. This might be your only chance to get the gold...
+[2025-05-19 21:17:56] PROMPT: Type 'continue' to swing to the ship. > 
+[2025-05-19 21:18:02] PLAYER_CMD (SPECIAL): continue
+[2025-05-19 21:18:02] ACTION: You decide to board the galleon...
+[2025-05-19 21:18:06] SYSTEM: Log file opened.
+[2025-05-19 21:18:06] SYSTEM: Game client started.
+[2025-05-19 21:18:06] SYSTEM: Game guide opened in external application.
+[2025-05-19 21:18:06] SYSTEM: Restarting game / Starting new game...
+[2025-05-19 21:18:06] INFO: Help message displayed to player.
+[2025-05-19 21:18:07] STORY: You are adrift in a small, rickety boat... The Crimson Serpent comes closer and closer. This might be your only chance to get the gold...
+[2025-05-19 21:18:08] PROMPT: Type 'continue' to swing to the ship. > 
+[2025-05-19 21:21:08] SYSTEM: Log file opened.
+[2025-05-19 21:21:08] SYSTEM: Game client started.
+[2025-05-19 21:21:08] SYSTEM: Attempting to open game guide...
+[2025-05-19 21:21:08] SYSTEM: Game guide opened in external application.
+[2025-05-19 21:21:08] SYSTEM: Restarting game / Starting new game...
+[2025-05-19 21:21:08] INFO: Help message displayed to player.
+[2025-05-19 21:21:09] STORY: You are adrift in a small, rickety boat... The Crimson Serpent comes closer and closer. This might be your only chance to get the gold...
+[2025-05-19 21:21:11] PROMPT: Type 'continue' to swing to the ship. > 
+[2025-05-19 21:21:15] PLAYER_CMD (SPECIAL): continue
+[2025-05-19 21:21:15] ACTION: You decide to board the galleon...
+[2025-05-19 21:21:18] INFO: 
+--- Pirate Ship Deck ---
+[2025-05-19 21:21:18] INFO: You stand on the weathered deck of a pirate galleon. Salt spray mists the air. You see a tall, weathered mast with coiled ropes, a ship's wheel, and a sturdy door leading [East] further into the ship. A [Sword] lies discarded near the railing, a colorful [Parrot] squawks from atop a barrel, and a faded [Portrait] is nailed to the mast.
+[2025-05-19 21:21:18] INFO: You see: [sword], [parrot], [portrait]
+[2025-05-19 21:21:18] INFO: Exits: East 
+[2025-05-19 21:21:22] PLAYER_CMD: east
+[2025-05-19 21:21:23] INFO: 
+--- The Galley ---
+[2025-05-19 21:21:23] INFO: The cramped galley smells of stale food and potent rum. A grumpy-looking Cook stirs a bubbling pot, eyeing you suspiciously. A door [North] seems to lead to the Captain's private area, another door [South] likely goes to a fridge, and the way [West] returns to the Deck.
+[2025-05-19 21:21:23] INFO: The room is empty of notable items.
+[2025-05-19 21:21:23] INFO: Exits: North South West 

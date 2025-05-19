@@ -139,6 +139,7 @@ void display_help_message(GameState* gs) {
         "    map              - Display the game map.\n"
         "  Game:\n"
         "    help             - Display this help message again.\n"
+        "    guide            - Open the detailed game guide in your default text viewer.\n"
         "    hint             - Get a hint for your current situation.\n"
         "    quit             - Exit the game.\n"
         "----------------------------------------------------------------------";
@@ -148,4 +149,49 @@ void display_help_message(GameState* gs) {
         log_action(gs, "INFO", "Help message displayed to player.");
     }
     printf("%s\n", help_text);
+}
+
+// Opens a file with the system's default application
+int open_file_with_default_app(const char* filename) {
+    char *abs_path = get_absolute_path(filename);
+    char command[PATH_MAX * 2]; // Double to account for quotes and command prefix
+    int result = 0;
+    
+    // First, check if the file exists before trying to open it
+    FILE *test_file = fopen(abs_path, "r");
+    if (!test_file) {
+        printf("Warning: Could not find guide file: %s\n", abs_path);
+        return -1;
+    }
+    fclose(test_file);
+
+    // Using system() can be problematic, especially on Windows, so we'll add
+    // error handling and make the command construction more robust
+#ifdef _WIN32
+    // Windows: use 'start' to open with the default application
+    // The empty quotes prevent issues with paths containing spaces
+    snprintf(command, sizeof(command), "start \"\" \"%s\" >nul 2>&1", abs_path);
+#elif defined(__APPLE__) || defined(__MACH__)
+    // macOS: use 'open'
+    snprintf(command, sizeof(command), "open \"%s\" >/dev/null 2>&1", abs_path);
+#else
+    // Linux/Unix: use 'xdg-open'
+    snprintf(command, sizeof(command), "xdg-open \"%s\" >/dev/null 2>&1", abs_path);
+#endif
+
+    // Run the command in a way that won't block the game if it fails
+    // We run it in the background to avoid hanging
+#ifdef _WIN32
+    // On Windows, system() returns the command's exit code
+    result = system(command);
+#else
+    // On Unix-like systems, run the command in the background
+    char bg_command[PATH_MAX * 2 + 10]; // Extra space for background operator
+    snprintf(bg_command, sizeof(bg_command), "%s &", command);
+    result = system(bg_command);
+#endif
+    
+    // No need to free abs_path as it points to a static buffer in get_absolute_path
+    
+    return result;
 }

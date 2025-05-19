@@ -1,0 +1,46 @@
+----------------------------------------------------------------------
+WELCOME TO THE BUCCANEER'S CIPHER!
+----------------------------------------------------------------------
+
+Your goal is to explore the pirate ship, solve puzzles, and find the treasure.
+
+HOW TO PLAY:
+ - Type commands and press Enter.
+ - Commands are usually 1 or 2 words (e.g., 'look', 'pick up sword').
+ - Pay attention to item names in room descriptions, often shown in [brackets].
+
+BASIC COMMANDS:
+  Movement:
+    north (or n)     - Move north
+    south (or s)     - Move south
+    east (or e)      - Move east
+    west (or w)      - Move west
+  
+  Interaction:
+    look             - Describe your current room and visible items/exits.
+    look at [item]   - Examine an item more closely (e.g., 'look at sword').
+    examine [item]   - Same as 'look at [item]'.
+    pick up [item]   - Add an item to your inventory (e.g., 'pick up key').
+    take [item]      - Same as 'pick up [item]'.
+    drop [item]      - Remove an item from inventory and place it in the room.
+    inventory (or i) - Show what items you are carrying.
+    use [item]       - Use an item, sometimes on another object or character
+                       (e.g., 'use key', 'use cook', 'use diary').
+    open [item]      - Try to open something (e.g., 'open chest').
+    map              - Display the game map.
+  
+  Game:
+    help             - Display this help message again.
+    hint             - Get a hint for your current situation.
+    quit             - Exit the game.
+----------------------------------------------------------------------
+
+STORY:
+You're a desperate buccaneer with no choice: the Galleon Gang threatens to 
+kill your family if you don't bring them a fortune by dawn. Your only hope 
+is to sneak aboard The Crimson Serpent, the wealthiest ship in the known sea. 
+To succeed you'll have to move cautiously, solve its hidden puzzles, and steal 
+the gold from its hold. Every step is dangerous, every lock a test of your skill. 
+Fail, and you'll lose more than treasure—you'll lose everything.
+
+Good luck, pirate!

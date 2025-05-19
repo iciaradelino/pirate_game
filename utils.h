@@ -12,5 +12,6 @@ void display_ascii_art(const char* art_name);
 void display_help_message(GameState* gs); // For logging
 void display_map(GameState* gs); // Added for map display
 char* get_absolute_path(const char* relative_path); // Returns absolute path from current directory
+int open_file_with_default_app(const char* filename); // Opens a file with the system's default application
 
 #endif // UTILS_H

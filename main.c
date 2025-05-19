@@ -40,6 +40,21 @@ int main(void)
     // Initialize the static item definitions *into gs*
     init_items(&gs); // Pass gs
 
+    // Try to open the game guide with the system's default text editor
+    // We wrap this in a try-catch style block to prevent crashes
+    {
+        log_action(&gs, "SYSTEM", "Attempting to open game guide...");
+        
+        int guide_open_result = open_file_with_default_app(GUIDE_FILENAME);
+        if (guide_open_result != 0) {
+            // If opening the guide failed, log it but continue with the game
+            log_action(&gs, "SYSTEM_WARNING", "Failed to open game guide. Type 'help' to see commands.");
+            printf("Note: You can view the game guide by typing 'guide' during gameplay.\n");
+        } else {
+            log_action(&gs, "SYSTEM", "Game guide opened in external application.");
+        }
+    }
+
     restart_game_flow(&gs); // This calls init_game_state which calls init_rooms
 
     while (!gs.game_won)
@@ -244,6 +259,20 @@ static int execute_command(GameState *gs, const char *command, const char *argum
     else if (strcmp(command, "hint") == 0)
     {
         handle_hint(gs);
+    }
+    else if (strcmp(command, "guide") == 0)
+    {
+        log_action(gs, "INFO", "Attempting to open game guide...");
+        
+        // Use a safer approach to open the guide
+        int guide_open_result = open_file_with_default_app(GUIDE_FILENAME);
+        if (guide_open_result != 0) {
+            log_action(gs, "GAME_ERROR", "Could not open the game guide. Using in-game help instead.");
+            // Fall back to displaying the help message if opening the guide fails
+            display_help_message(gs);
+        } else {
+            log_action(gs, "INFO", "Game guide opened in external application.");
+        }
     }
     else
     {

@@ -22,6 +22,7 @@
 
 #define MAX_LINE_LENGTH 256
 #define LOG_FILENAME "game_log.txt"
+#define GUIDE_FILENAME "game_guide.txt" // Path to the game guide file
 #define MAP_FILENAME "ascii/map.txt" // Path to the map file
 #define SWING_ANIMATION_FILENAME "ascii/swing_animation_frames.txt" // Path for animation
 

@@ -1,9 +1,6 @@
 #include "room.h"
-#include "game_state.h" // Needed for init_rooms signature
-#include <stdio.h> // For NULL
-
-// Define the global rooms array
-// Room game_rooms[NUM_ROOMS]; // This line will be removed
+#include "game_state.h" // needed for init_rooms signature
+#include <stdio.h> // for NULL
 
 void add_item_to_room(Room* room, ItemID item_id) {
     if (room->item_count < MAX_ROOM_ITEMS) {
@@ -22,7 +19,7 @@ void remove_item_from_room(Room* room, ItemID item_id) {
     }
 
     if (found_idx != -1) {
-        // Shift items down to fill the gap
+        // shift items down to fill the gap
         for (int i = found_idx; i < room->item_count - 1; ++i) {
             room->items_in_room[i] = room->items_in_room[i + 1];
         }
@@ -30,7 +27,7 @@ void remove_item_from_room(Room* room, ItemID item_id) {
     }
 }
 
-// Definition for item_in_room
+// definition for item_in_room
 int item_in_room(Room* room, ItemID item_id) {
     for (int i = 0; i < room->item_count; ++i) {
         if (room->items_in_room[i] == item_id) {
@@ -41,7 +38,7 @@ int item_in_room(Room* room, ItemID item_id) {
 }
 
 
-void init_rooms(GameState* gs) { // Signature changed
+void init_rooms(GameState* gs) {
     // ROOM_DECK
     gs->rooms[ROOM_DECK] = (Room){ROOM_DECK, "Pirate Ship Deck",
         "You stand on the weathered deck of a pirate galleon. Salt spray mists the air. You see a tall, weathered mast with coiled ropes, a ship\'s wheel, and a sturdy door leading [East] further into the ship. A [Sword] lies discarded near the railing, a colorful [Parrot] squawks from atop a barrel, and a faded [Portrait] is nailed to the mast.",

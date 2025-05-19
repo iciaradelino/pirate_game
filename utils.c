@@ -1,29 +1,29 @@
-#include "common.h" // For MAP_FILENAME and other common definitions
+#include "common.h" // for MAP_FILENAME and other common definitions
 #include "utils.h"
-#include "game_state.h" // Needs full GameState definition for gs->log_file
-#include <unistd.h> // For getcwd
+#include "game_state.h" // needs full GameState definition for gs->log_file
+#include <unistd.h> // for getcwd
 
-// Function to get absolute path based on executable's directory
+// function to get absolute path based on executable's directory
 char* get_absolute_path(const char* relative_path) {
-    static char abs_path[PATH_MAX]; // Use static buffer to avoid heap allocation
-    static char exe_dir[PATH_MAX] = {0}; // Cache for executable directory
-    static int first_run = 1; // Flag for first run checks
-    
-    // Only determine the executable directory once
+    static char abs_path[PATH_MAX]; // use static buffer to avoid heap allocation
+    static char exe_dir[PATH_MAX] = {0}; // cache for executable directory
+    static int first_run = 1; // flag for first run checks
+
+    // only determine the executable directory once
     if (exe_dir[0] == '\0') {
-        // Get current working directory
+        // get current working directory
         if (getcwd(exe_dir, PATH_MAX) == NULL) {
             perror("getcwd");
-            strcpy(exe_dir, "."); // Fallback to current directory
+            strcpy(exe_dir, "."); // fallback to current directory
         }
         
         printf("DEBUG: Game running from directory: %s\n", exe_dir);
     }
     
-    // Construct absolute path: exe_dir + "/" + relative_path
+    // construct absolute path: exe_dir + "/" + relative_path
     snprintf(abs_path, PATH_MAX, "%s/%s", exe_dir, relative_path);
     
-    // On first run, check if critical directories exist
+    // on first run, check if critical directories exist
     if (first_run) {
         char dir_check[PATH_MAX];
         snprintf(dir_check, PATH_MAX, "%s/ascii", exe_dir);
@@ -50,7 +50,7 @@ void log_action(GameState* gs, const char* action_type, const char* message) {
         fprintf(gs->log_file, "[%s] %s: %s\n", time_str, action_type, message);
         fflush(gs->log_file);
     }
-    printf("%s\n", message); // Also print to console for immediate feedback
+    printf("%s\n", message);
 }
 
 void print_to_console(const char* message) {
@@ -84,7 +84,7 @@ void display_ascii_art(const char* art_name) {
 }
 
 void display_map(GameState* gs) {
-    // Get absolute path for the map file
+    // get absolute path for the map file
     char* abs_path = get_absolute_path(MAP_FILENAME);
     
     FILE *fp = fopen(abs_path, "r");
@@ -97,13 +97,13 @@ void display_map(GameState* gs) {
         return;
     }
 
-    char line[MAX_LINE_LENGTH * 2]; // Allow for potentially wider map lines
+    char line[MAX_LINE_LENGTH * 2];
     while (fgets(line, sizeof(line), fp)) {
-        // Don't use log_action for each line of the map, just print directly
+        // don't use log_action for each line of the map, just print directly
         // to avoid cluttering the log and for direct console output.
         printf("%s", line); // fgets keeps the newline if space allows
     }
-    fflush(stdout); // Ensure map is printed immediately
+    fflush(stdout); // ensure map is printed immediately
 
     fclose(fp);
 }
@@ -144,20 +144,20 @@ void display_help_message(GameState* gs) {
         "    quit             - Exit the game.\n"
         "----------------------------------------------------------------------";
 
-    // Log that help was displayed, but print the raw text for better formatting.
+    // log that help was displayed, but print the raw text for better formatting.
     if (gs) { // gs might be NULL if called before game state is fully ready for logging
         log_action(gs, "INFO", "Help message displayed to player.");
     }
     printf("%s\n", help_text);
 }
 
-// Opens a file with the system's default application
+// opens a file with the system's default application
 int open_file_with_default_app(const char* filename) {
     char *abs_path = get_absolute_path(filename);
-    char command[PATH_MAX * 2]; // Double to account for quotes and command prefix
+    char command[PATH_MAX * 2];
     int result = 0;
     
-    // First, check if the file exists before trying to open it
+    // first, check if the file exists before trying to open it
     FILE *test_file = fopen(abs_path, "r");
     if (!test_file) {
         printf("Warning: Could not find guide file: %s\n", abs_path);
@@ -165,11 +165,11 @@ int open_file_with_default_app(const char* filename) {
     }
     fclose(test_file);
 
-    // Using system() can be problematic, especially on Windows, so we'll add
+    // using system() can be problematic, especially on Windows, so we'll add
     // error handling and make the command construction more robust
 #ifdef _WIN32
     // Windows: use 'start' to open with the default application
-    // The empty quotes prevent issues with paths containing spaces
+    // the empty quotes prevent issues with paths containing spaces
     snprintf(command, sizeof(command), "start \"\" \"%s\" >nul 2>&1", abs_path);
 #elif defined(__APPLE__) || defined(__MACH__)
     // macOS: use 'open'
@@ -179,19 +179,19 @@ int open_file_with_default_app(const char* filename) {
     snprintf(command, sizeof(command), "xdg-open \"%s\" >/dev/null 2>&1", abs_path);
 #endif
 
-    // Run the command in a way that won't block the game if it fails
-    // We run it in the background to avoid hanging
+    // run the command in a way that won't block the game if it fails
+    // we run it in the background to avoid hanging
 #ifdef _WIN32
-    // On Windows, system() returns the command's exit code
+    // on Windows, system() returns the command's exit code
     result = system(command);
 #else
-    // On Unix-like systems, run the command in the background
-    char bg_command[PATH_MAX * 2 + 10]; // Extra space for background operator
+    // on Unix-like systems, run the command in the background
+    char bg_command[PATH_MAX * 2 + 10];
     snprintf(bg_command, sizeof(bg_command), "%s &", command);
     result = system(bg_command);
 #endif
     
-    // No need to free abs_path as it points to a static buffer in get_absolute_path
+    // no need to free abs_path as it points to a static buffer in get_absolute_path
     
     return result;
 }

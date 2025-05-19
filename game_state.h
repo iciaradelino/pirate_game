@@ -1,10 +1,10 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 
-#include "player.h" // Needs Player struct
-#include "room.h"   // Needs Room definition
-#include "item.h"   // Needs Item definition
-#include "common.h" // For MAX_LINE_LENGTH and FILE*
+#include "player.h" // needs Player struct
+#include "room.h"   // needs Room definition
+#include "item.h"   // needs Item definition
+#include "common.h" // for MAX_LINE_LENGTH and FILE*
 #include <time.h>
 
 #define FRIDGE_TIME_LIMIT 30 // 30 seconds time limit for the fridge
@@ -13,7 +13,7 @@ struct GameState {
     Player player;
     int game_over;
     int game_won;
-    int should_restart; // Flag to indicate if a restart is pending
+    int should_restart;
 
     // Puzzle/Event Flags
     int cook_pleased;
@@ -24,24 +24,24 @@ struct GameState {
     int diary_deciphered;
     int knows_chest_code;
     int chest_unlocked;
-    int captain_riddle_solved; // New flag for captain's riddle
-    int captain_riddle_attempts; // New counter for captain's riddle attempts
+    int captain_riddle_solved;
+    int captain_riddle_attempts;
 
     int special_prompt_active; // If true, input goes to special handler
     char special_prompt_context[MAX_LINE_LENGTH]; // Context for special input
 
-    // Game Data (replaces globals)
+    // game Data
     Room rooms[NUM_ROOMS];
     Item items[MAX_ITEMS];
 
     FILE* log_file;
 
-    // Timer for fridge room
+    // timer for fridge room
     time_t fridge_entry_time;
     int fridge_timer_active;
 };
 
-// Function prototypes
+// function prototypes
 void init_game_state(GameState* gs);
 
 #endif // GAME_STATE_H

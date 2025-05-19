@@ -1,9 +1,9 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "common.h" // For MAX_LINE_LENGTH, GameState fwd dec
+#include "common.h" // for MAX_LINE_LENGTH, GameState fwd dec
 
-#define MAX_ITEMS 20 // Max different types of items
+#define MAX_ITEMS 20 // max different types of items in inventory
 
 typedef enum {
     ITEM_SWORD,
@@ -16,19 +16,19 @@ typedef enum {
     ITEM_DIARY,
     ITEM_MYSTIC_LENS,
     ITEM_TREASURE_KEY,
-    ITEM_NONE // Represents no item, or end of list
+    ITEM_NONE // represents no item, or end of list
 } ItemID;
 
 typedef struct Item {
     ItemID id;
     const char* name;
-    const char* description; // General description
-    const char* examine_text; // Detailed text for 'examine' command
+    const char* description; // general description
+    const char* examine_text; // detailed text for 'examine' command
     int can_pickup;
 } Item;
 
-// Function prototypes
-void init_items(GameState* gs); // Now takes GameState to initialize gs->items
-Item* get_item_by_name(GameState* gs, const char* name); // Now takes GameState to search gs->items
+// function prototypes
+void init_items(GameState* gs);
+Item* get_item_by_name(GameState* gs, const char* name);
 
 #endif // ITEM_H

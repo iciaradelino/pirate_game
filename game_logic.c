@@ -1,28 +1,27 @@
-// filepath: /Users/inventure71/VSProjects/pirate_game/game_logic.c
 #include "game_logic.h"
 #include "item.h"
 #include "room.h"
 #include "player.h"
 #include "utils.h"
-#include "animation.h" // For run_animation in restart_game_flow
+#include "animation.h" // for run_animation in restart_game_flow
 #include "game_state.h"
 #include "parser.h"
 
-#include <stdio.h> // For sprintf
+#include <stdio.h> // for sprintf
 #include <string.h>
-#include <strings.h> // For strcasecmp on MinGW
-#include <stdlib.h> // For rand, srand
-#include <time.h>   // For time
+#include <strings.h> // for strcasecmp on MinGW
+#include <stdlib.h> // for rand, srand
+#include <time.h>   // for time
 
 // --- Room Description ---
 void show_room_description(GameState* gs) {
     Room* current_room = &gs->rooms[gs->player.current_room_id];
-    char buffer[MAX_LINE_LENGTH * 2]; // Increased buffer size
+    char buffer[MAX_LINE_LENGTH * 2]; 
 
     sprintf(buffer, "\n--- %s ---", current_room->name);
     log_action(gs, "INFO", buffer);
 
-    if (!current_room->visited || gs->player.current_room_id == ROOM_DECK) { // Always full desc for deck on new entry
+    if (!current_room->visited || gs->player.current_room_id == ROOM_DECK) { // always full desc for deck on new entry
         log_action(gs, "INFO", current_room->description);
         current_room->visited = 1;
     } else {
@@ -30,14 +29,14 @@ void show_room_description(GameState* gs) {
         log_action(gs, "INFO", buffer);
     }
 
-    // List items in room
+    // list items in room
     int items_listed = 0;
     strcpy(buffer, "You see: ");
     for (int i = 0; i < current_room->item_count; ++i) {
         Item* item = &gs->items[current_room->items_in_room[i]];
         if (item->id != ITEM_NONE) {
             if (items_listed > 0) strcat(buffer, ", ");
-            strcat(buffer, "["); // Add brackets for clarity
+            strcat(buffer, "[");
             strcat(buffer, item->name);
             strcat(buffer, "]");
             items_listed++;
@@ -49,7 +48,7 @@ void show_room_description(GameState* gs) {
         log_action(gs, "INFO", "The room is empty of notable items.");
     }
 
-    // List exits
+    // list exits
     strcpy(buffer, "Exits: ");
     int exits_listed = 0;
     if (current_room->exits[0] != NUM_ROOMS) { strcat(buffer, "North "); exits_listed++; }
@@ -67,11 +66,11 @@ void show_room_description(GameState* gs) {
 void handle_game_over(GameState* gs, const char* message, const char* art_key) {
     if (message && strlen(message) > 0) {
         log_action(gs, "GAME_EVENT", message);
-        SLEEP_MS(1000); // Pause after the main game over message
+        SLEEP_MS(1000); // pause after the main game over message
     }
     if (art_key) {
         display_ascii_art(art_key);
-        SLEEP_MS(1500); // Longer pause after game over art
+        SLEEP_MS(1500); // longer pause after game over art
     }
     gs->game_over = 1;
     gs->should_restart = 1;
@@ -80,10 +79,10 @@ void handle_game_over(GameState* gs, const char* message, const char* art_key) {
 void handle_win_game(GameState* gs) {
     log_action(gs, "GAME_EVENT", "YOU HAVE FOUND THE TREASURE!");
     SLEEP_MS(1000);
-    display_ascii_art("TREASURE_ART"); // Display the treasure ASCII art
-    SLEEP_MS(2000); // Add a delay after showing the treasure
-    display_ascii_art("WIN_GAME"); // Display the standard win message art
-    SLEEP_MS(1000); // Pause before setting game_won
+    display_ascii_art("TREASURE_ART"); // display the treasure ASCII art
+    SLEEP_MS(2000); // add a delay after showing the treasure
+    display_ascii_art("WIN_GAME"); // display the standard win message art
+    SLEEP_MS(1000); // pause before setting game_won
     gs->game_won = 1;
 }
 
@@ -103,14 +102,14 @@ void handle_move(GameState* gs, const char* direction_str) {
     }
 
     if (next_room_id != NUM_ROOMS) {
-        // Pre-entry checks
+        // pre-entry checks
         if (next_room_id == ROOM_CAPTAIN_QUARTERS && gs->player.current_room_id == ROOM_GALLEY) {
-            if (!gs->cook_pleased) { // Cook is NOT pleased
+            if (!gs->cook_pleased) { // cook is NOT pleased
                 log_action(gs, "GAME_INFO", "The Cook blocks your path north. 'Not until ye fetch me ingredients, matey! I need some [Salted Pork], [Hardtack Biscuits], and a [Grog Bottle] for the Captain\'s stew.'");
                 return;
-            } else { // Cook IS pleased, and player is moving North
+            } else { // cook IS pleased, and player is moving North
                 log_action(gs, "GAME_INFO", "The Cook nods as you pass. 'The stew was fine. Go on about yer business, but shhh, the Captain sleeps.'");
-                // No return here, allow movement
+                // no return here, allow movement
             }
         }
         if (next_room_id == ROOM_CAPTAIN_QUARTERS && player_has_item(&gs->player, ITEM_PARROT)) {
@@ -134,22 +133,22 @@ void handle_move(GameState* gs, const char* direction_str) {
         // Captain's Riddle for Prison Hold Access
         if (next_room_id == ROOM_PRISON_HOLD && gs->player.current_room_id == ROOM_CAPTAIN_QUARTERS) {
             if (gs->captain_riddle_solved) {
-                // Riddle solved, allow movement
+                // riddle solved, allow movement
                 log_action(gs, "GAME_INFO", "The western door creaks open.");
             } else if (gs->captain_riddle_attempts == 0) {
                 log_action(gs, "GAME_INFO", "The lock on the western door is unresponsive. You cannot open it.");
-                return; // Prevent movement
+                return; // prevent movement
             } else {
                 log_action(gs, "GAME_INFO", "The door to the west is locked. A small inscription reads:\n"
                     "\"Silent servant by my side,\nThrough roiled seas and turning tide,\nWith face unblinking, ever true,\nIt guides my hand when night is blue.\"");
                 gs->special_prompt_active = 1;
                 strcpy(gs->special_prompt_context, "CAPTAIN_RIDDLE_ANSWER");
                 log_action(gs, "PROMPT", "What is the answer? > ");
-                return; // Prevent movement
+                return; // prevent movement
             }
         }
 
-        // Handle fridge timer
+        // handle fridge timer
         if (next_room_id == ROOM_FRIDGE) {
             gs->fridge_timer_active = 1;
             gs->fridge_entry_time = time(NULL);
@@ -160,12 +159,12 @@ void handle_move(GameState* gs, const char* direction_str) {
 
         gs->player.current_room_id = next_room_id;
         
-        // Only show map if not entering treasure room
+        // only show map if not entering treasure room
         if (next_room_id != ROOM_TREASURE_ROOM) {
-            display_map(gs); // Display map before room description
+            display_map(gs);
         }
 
-        // Display galley ASCII art if entering the galley
+        // display galley ASCII art if entering the galley
         if (next_room_id == ROOM_GALLEY) {
             FILE* galley_file = fopen("ascii/galley.txt", "r");
             if (galley_file) {
@@ -174,48 +173,48 @@ void handle_move(GameState* gs, const char* direction_str) {
                     printf("%s", line);
                 }
                 fclose(galley_file);
-                printf("\n"); // Add a newline after the ASCII art
-                SLEEP_MS(750); // Pause after art
+                printf("\n"); // add a newline after the ASCII art
+                SLEEP_MS(750); // pause after art
             }
         }
 
-        // Display Parrot and Sword ASCII art if entering the Deck
+        // display Parrot and Sword ASCII art if entering the Deck
         if (next_room_id == ROOM_DECK) {
             display_deck_art(gs);
             SLEEP_MS(750); // Pause after art
         }
 
-        // Display Prisoner Room ASCII art if entering the Prison Hold
+        // display Prisoner Room ASCII art if entering the Prison Hold
         if (next_room_id == ROOM_PRISON_HOLD) {
             FILE* prisoner_room_file = fopen("ascii/prisoner_room.txt", "r");
             if (prisoner_room_file) {
                 char line[MAX_LINE_LENGTH];
-                printf("\n"); // Add a newline before the ASCII art
+                printf("\n"); // add a newline before the ASCII art
                 while (fgets(line, sizeof(line), prisoner_room_file)) {
                     printf("%s", line); // fgets keeps the newline
                 }
                 fclose(prisoner_room_file);
-                printf("\n"); // Add a newline after the ASCII art
-                SLEEP_MS(750); // Pause after art
+                printf("\n"); // add a newline after the ASCII art
+                SLEEP_MS(750); // pause after art
             }
         }
 
-        // Display Captain's Room ASCII art if entering the Captain's Quarters
+        // display Captain's Room ASCII art if entering the Captain's Quarters
         if (next_room_id == ROOM_CAPTAIN_QUARTERS) {
             FILE* captain_room_file = fopen("ascii/captain_room.txt", "r");
             if (captain_room_file) {
                 char line[MAX_LINE_LENGTH];
-                printf("\n"); // Add a newline before the ASCII art
+                printf("\n"); // add a newline before the ASCII art
                 while (fgets(line, sizeof(line), captain_room_file)) {
                     printf("%s", line); // fgets keeps the newline
                 }
                 fclose(captain_room_file);
-                printf("\n"); // Add a newline after the ASCII art
-                SLEEP_MS(750); // Pause after art
+                printf("\n"); // add a newline after the ASCII art
+                SLEEP_MS(750); // pause after art
             }
         }
 
-        // Display door opening animation if entering treasure room
+        // display door opening animation if entering treasure room
         if (next_room_id == ROOM_TREASURE_ROOM) {
             FILE* door_file = fopen("ascii/door_opening.txt", "r");
             if (door_file) {
@@ -223,17 +222,17 @@ void handle_move(GameState* gs, const char* direction_str) {
                 while (fgets(line, sizeof(line), door_file)) {
                     printf("%s", line);
                     if (strcmp(line, "\n") == 0) {
-                        SLEEP_MS(500); // Add delay between frames
+                        SLEEP_MS(500); // add delay between frames
                     }
                 }
                 fclose(door_file);
-                printf("\n"); // Add a newline after the animation
+                printf("\n"); // add a newline after the animation
             }
         }
 
         show_room_description(gs);
 
-        // Post-entry events
+        // post-entry events
         if (next_room_id == ROOM_TREASURE_ROOM) {
             handle_win_game(gs);
         } else if (next_room_id == ROOM_PRISON_HOLD && gs->prisoners_hostile && !gs->prisoners_pacified) {
@@ -247,7 +246,7 @@ void handle_move(GameState* gs, const char* direction_str) {
     }
 }
 
-// Add new function to check fridge timer
+// add new function to check fridge timer
 void check_fridge_timer(GameState* gs) {
     if (gs->fridge_timer_active) {
         time_t current_time = time(NULL);
@@ -273,7 +272,7 @@ void handle_examine(GameState* gs, const char* item_name_str) {
     Item* item_to_examine = NULL;
     Room* current_room = &gs->rooms[gs->player.current_room_id];
 
-    // Check room items first
+    // check room items first
     for (int i = 0; i < current_room->item_count; ++i) {
         ItemID current_item_id = current_room->items_in_room[i];
         if (strcasecmp(gs->items[current_item_id].name, item_name_str) == 0) {
@@ -281,7 +280,7 @@ void handle_examine(GameState* gs, const char* item_name_str) {
             break;
         }
     }
-    // If not in room, check inventory
+    // if not in room, check inventory
     if (!item_to_examine) {
         for (int i = 0; i < gs->player.inventory_count; ++i) {
             ItemID current_item_id = gs->player.inventory[i];
@@ -378,7 +377,7 @@ void handle_inventory(GameState* gs) {
         log_action(gs, "INFO", "Your inventory is empty.");
         return;
     }
-    char buffer[MAX_LINE_LENGTH * 2] = "You are carrying: "; // Increased buffer
+    char buffer[MAX_LINE_LENGTH * 2] = "You are carrying: ";
     for (int i = 0; i < gs->player.inventory_count; ++i) {
         strcat(buffer, "[");
         strcat(buffer, gs->items[gs->player.inventory[i]].name);
@@ -390,7 +389,7 @@ void handle_inventory(GameState* gs) {
     log_action(gs, "INFO", buffer);
 }
 
-// --- Specific 'use' handlers ---
+// --- specific 'use' handlers ---
 void handle_use_cook(GameState* gs) {
     if (gs->player.current_room_id != ROOM_GALLEY) {
         log_action(gs, "GAME_ERROR", "The cook isn't here."); return;
@@ -418,7 +417,7 @@ void handle_use_cook(GameState* gs) {
 
 void handle_use_sword_for_prisoners(GameState* gs) {
     if (!player_has_item(&gs->player, ITEM_SWORD)) {
-        log_action(gs, "GAME_ERROR", "You fumble for a sword you don't have!"); // Should not happen if logic is right
+        log_action(gs, "GAME_ERROR", "You fumble for a sword you don't have!");
         handle_game_over(gs, "Without a weapon to defend yourself, the prisoners overwhelm you.", "GAME_OVER_PRISONERS");
         return;
     }
@@ -428,8 +427,8 @@ void handle_use_sword_for_prisoners(GameState* gs) {
     gs->prisoners_hostile = 0;
     gs->special_prompt_active = 0;
     
-    display_ascii_art("PRISONER_CLOSEUP"); // Display prisoner face before riddles
-    SLEEP_MS(1000); // Optional: Short delay after art
+    display_ascii_art("PRISONER_CLOSEUP"); // display prisoner face before riddles
+    SLEEP_MS(1000);
 
     log_action(gs, "GAME_EVENT", "One prisoner speaks: 'We're tired of this brig... Answer our riddles three!'");
     gs->current_riddle_idx = 0;
@@ -487,7 +486,7 @@ void handle_use(GameState* gs, const char* item_name_str) {
     else if (strcasecmp(item_name_str, "diary") == 0) handle_use_diary(gs);
     else if (strcasecmp(item_name_str, "lens") == 0) {
         if (player_has_item(&gs->player, ITEM_DIARY) && player_has_item(&gs->player, ITEM_MYSTIC_LENS)) {
-            handle_use_diary(gs); // Using lens on diary
+            handle_use_diary(gs); // using lens on diary
         } else if (player_has_item(&gs->player, ITEM_MYSTIC_LENS)) {
             log_action(gs, "GAME_INFO", "You look through the lens. The world looks... shimmery.");
         } else {
@@ -516,7 +515,7 @@ void handle_open_chest(GameState* gs) {
         } else if (player_has_item(&gs->player, ITEM_TREASURE_KEY)){
             strcat(chest_msg, "You already took the key.");
         } else {
-             strcat(chest_msg, "It's empty now."); // Should not happen if key is only item
+             strcat(chest_msg, "It's empty now."); // should not happen if key is only item
         }
         log_action(gs, "GAME_INFO", chest_msg);
         return;
@@ -525,14 +524,13 @@ void handle_open_chest(GameState* gs) {
         log_action(gs, "GAME_INFO", "The chest has a combination lock. You don't know the code."); return;
     }
     log_action(gs, "PROMPT", "The chest has a combination lock. Enter the code: > ");
-    SLEEP_MS(500); // Pause before input for chest code
+    SLEEP_MS(500); // pause before input for chest code
     gs->special_prompt_active = 1;
     strcpy(gs->special_prompt_context, "CHEST_CODE_ENTRY");
 }
 
-// Helper function to display Deck-specific ASCII art
+// helper function to display Deck-specific ASCII art
 void display_deck_art(GameState* gs) {
-    // This is the existing logic for displaying parrot and sword ASCII art
     char parrot_lines[20][MAX_LINE_LENGTH];
     char sword_lines[20][MAX_LINE_LENGTH];
     int parrot_height = 0;
@@ -543,7 +541,7 @@ void display_deck_art(GameState* gs) {
 
     if (parrot_file) {
         while (parrot_height < 20 && fgets(parrot_lines[parrot_height], MAX_LINE_LENGTH, parrot_file)) {
-            parrot_lines[parrot_height][strcspn(parrot_lines[parrot_height], "\n")] = 0; // Remove newline
+            parrot_lines[parrot_height][strcspn(parrot_lines[parrot_height], "\n")] = 0; // remove newline
             parrot_height++;
         }
         fclose(parrot_file);
@@ -551,7 +549,7 @@ void display_deck_art(GameState* gs) {
 
     if (sword_file) {
         while (sword_height < 20 && fgets(sword_lines[sword_height], MAX_LINE_LENGTH, sword_file)) {
-            sword_lines[sword_height][strcspn(sword_lines[sword_height], "\n")] = 0; // Remove newline
+            sword_lines[sword_height][strcspn(sword_lines[sword_height], "\n")] = 0; // remove newline
             sword_height++;
         }
         fclose(sword_file);
@@ -560,43 +558,43 @@ void display_deck_art(GameState* gs) {
     max_height = (parrot_height > sword_height) ? parrot_height : sword_height;
 
     if (parrot_height > 0 || sword_height > 0) {
-        printf("\n"); // Add a newline before the ASCII art
+        printf("\n"); // add a newline before the ASCII art
         for (int i = 0; i < max_height; ++i) {
             if (i < parrot_height) {
-                printf("%-30s", parrot_lines[i]); // Print parrot line, padded to 30 chars
+                printf("%-30s", parrot_lines[i]); // print parrot line, padded to 30 chars
             } else {
-                printf("%-30s", ""); // Pad with spaces
+                printf("%-30s", ""); // pad with spaces
             }
             printf("     "); // 5 spaces between arts
             if (i < sword_height) {
-                printf("%s", sword_lines[i]);  // Print sword line
+                printf("%s", sword_lines[i]);  // print sword line
             }
             printf("\n");
         }
-        printf("\n"); // Add a newline after the ASCII art
+        printf("\n"); // add a newline after the ASCII art
     }
 }
 
-// --- Special Input Processing ---
+// --- special Input Processing ---
 void process_special_input(GameState* gs, const char* raw_input) {
     char input[MAX_LINE_LENGTH];
     strncpy(input, raw_input, MAX_LINE_LENGTH -1);
     input[MAX_LINE_LENGTH-1] = '\0';
-    to_lower_str(input); // Processed input is lowercase
+    to_lower_str(input); // processed input is lowercase
 
     if (strcmp(gs->special_prompt_context, "PRISONER_ATTACK") == 0) {
         int used_correct_weapon = 0;
-        // Input is already lowercased and includes the full command e.g., "use sword"
+        // input is already lowercased and includes the full command e.g., "use sword"
         if (strcmp(input, "use sword") == 0 && player_has_item(&gs->player, ITEM_SWORD)) {
             used_correct_weapon = 1;
         } else if (strcmp(input, "use knife") == 0 && player_has_item(&gs->player, ITEM_SWORD)) {
-            // Player typed "use knife" and has a sword, which we treat as the intended weapon.
-            // The game currently only has ITEM_SWORD, so "knife" acts as an alias here.
+            // player typed "use knife" and has a sword, which we treat as the intended weapon.
+            // the game currently only has ITEM_SWORD, so "knife" acts as an alias here.
             used_correct_weapon = 1;
         }
 
         if (used_correct_weapon) {
-            handle_use_sword_for_prisoners(gs); // This function will clear special_prompt_active
+            handle_use_sword_for_prisoners(gs); // this function will clear special_prompt_active
         } else {
             log_action(gs, "GAME_EVENT", "You fumble or try the wrong action!");
             handle_game_over(gs, "The prisoners don\'t wait for you to get your weapon right and overwhelm you.", "GAME_OVER_PRISONERS");
@@ -706,9 +704,9 @@ void process_special_input(GameState* gs, const char* raw_input) {
     else if (strcmp(gs->special_prompt_context, "INTRO_CONTINUE") == 0) {
         if (strcmp(input, "continue") == 0) {
             log_action(gs, "ACTION", "You decide to board the galleon...");
-            run_animation(SWING_ANIMATION_FILENAME, gs); // Animation filename from common.h
+            run_animation(SWING_ANIMATION_FILENAME, gs); 
             gs->player.current_room_id = ROOM_DECK;
-            display_deck_art(gs); // Display Deck art on initial entry
+            display_deck_art(gs); // display Deck art on initial entry
             show_room_description(gs);
             gs->special_prompt_active = 0;
         } else {
@@ -720,14 +718,14 @@ void process_special_input(GameState* gs, const char* raw_input) {
 
 void restart_game_flow(GameState* gs) {
     log_action(gs, "SYSTEM", "Restarting game / Starting new game...");
-    init_game_state(gs); // Resets flags, player pos, inventory, room items etc.
+    init_game_state(gs); // resets flags, player pos, inventory, room items etc.
     
     CLEAR_SCREEN();
 
     display_help_message(gs);
-    SLEEP_MS(1000); // Pause after help message
+    SLEEP_MS(1000); // pause after help message
 
-    // Then, the story intro
+    // the story intro
     log_action(gs, "STORY", "You are adrift in a small, rickety boat... The Crimson Serpent comes closer and closer. This might be your only chance to get the gold...");
     SLEEP_MS(1500);
     log_action(gs, "PROMPT", "Type 'continue' to swing to the ship. > ");
@@ -737,7 +735,7 @@ void restart_game_flow(GameState* gs) {
 
 void handle_hint(GameState* gs) {
     Room* current_room = &gs->rooms[gs->player.current_room_id];
-    char hint_message[MAX_LINE_LENGTH * 2] = ""; // Increased buffer for longer hints
+    char hint_message[MAX_LINE_LENGTH * 2] = "";
 
     switch (gs->player.current_room_id) {
         case ROOM_DECK:

@@ -1,9 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "common.h" // For basic types if needed
-#include "item.h" // Needs ItemID
-#include "room.h" // Needs RoomID
+#include "common.h" // for basic types if needed
+#include "item.h" // needs ItemID
+#include "room.h" // needs RoomID
 
 #define MAX_INVENTORY_ITEMS 10
 
@@ -13,7 +13,7 @@ typedef struct Player {
     int inventory_count;
 } Player;
 
-// Function prototypes
+// function prototypes
 void add_item_to_inventory(Player* player, ItemID item_id);
 void remove_item_from_inventory(Player* player, ItemID item_id);
 int player_has_item(Player* player, ItemID item_id);

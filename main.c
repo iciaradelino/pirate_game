@@ -27,9 +27,9 @@ static FILE *open_log_file_checked(const char *filename)
 
 int main(void)
 {
-    GameState gs; // Create gs first
+    GameState gs; 
 
-    // Open log file *before* any logging happens
+    // open log file *before* any logging happens
     gs.log_file = open_log_file_checked(LOG_FILENAME);
     if (gs.log_file)
     {
@@ -37,11 +37,11 @@ int main(void)
     }
     log_action(&gs, "SYSTEM", "Game client started.");
 
-    // Initialize the static item definitions *into gs*
-    init_items(&gs); // Pass gs
+    // initialize the static item definitions *into gs*
+    init_items(&gs); 
 
-    // Try to open the game guide with the system's default text editor
-    // We wrap this in a try-catch style block to prevent crashes
+    // try to open the game guide with the system's default text editor
+    // we wrap this in a try-catch style block to prevent crashes
     {
         log_action(&gs, "SYSTEM", "Attempting to open game guide...");
         
@@ -55,7 +55,7 @@ int main(void)
         }
     }
 
-    restart_game_flow(&gs); // This calls init_game_state which calls init_rooms
+    restart_game_flow(&gs); // this calls init_game_state which calls init_rooms
 
     while (!gs.game_won)
     {
@@ -75,9 +75,9 @@ int main(void)
         }
         else
         {
-            // Check fridge timer before processing player input
+            // check fridge timer before processing player input
             check_fridge_timer(&gs);
-            if (!gs.game_over) {  // Only process input if game isn't over from timer
+            if (!gs.game_over) {  // only process input if game isn't over from timer
                 continue_game = process_player_input(&gs);
             }
         }
@@ -264,11 +264,9 @@ static int execute_command(GameState *gs, const char *command, const char *argum
     {
         log_action(gs, "INFO", "Attempting to open game guide...");
         
-        // Use a safer approach to open the guide
         int guide_open_result = open_file_with_default_app(GUIDE_FILENAME);
         if (guide_open_result != 0) {
             log_action(gs, "GAME_ERROR", "Could not open the game guide. Using in-game help instead.");
-            // Fall back to displaying the help message if opening the guide fails
             display_help_message(gs);
         } else {
             log_action(gs, "INFO", "Game guide opened in external application.");

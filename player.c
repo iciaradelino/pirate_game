@@ -1,11 +1,11 @@
 #include "player.h"
-#include <stdio.h> // For NULL
+#include <stdio.h> // for NULL
 
 void add_item_to_inventory(Player* player, ItemID item_id) {
     if (player->inventory_count < MAX_INVENTORY_ITEMS) {
         player->inventory[player->inventory_count++] = item_id;
     }
-    // Else: could add error for full inventory
+    // else: could add error for full inventory
 }
 
 void remove_item_from_inventory(Player* player, ItemID item_id) {

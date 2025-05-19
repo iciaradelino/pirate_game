@@ -792,8 +792,8 @@ void display_ascii_art(const char* art_name) {
 void display_help_message(GameState* gs) {
     const char* help_text =
         "----------------------------------------------------------------------\n"
-        "Welcome to The Buccaneer's Cipher!\n"
-        "Your goal is to explore the pirate ship, solve puzzles, and find the treasure.\n"
+        "Welcome to Stowaway!\n"
+        "You’re a desperate buccaneer with no choice: the Galleon Gang threatens to kill your family if you don’t bring them a fortune by dawn. Your only hope is to sneak aboard The Crimson Serpent, the wealthiest ship in the known sea. To succeed youll have to move cautiosly, solve its hidden puzzles, and steal the gold from its hold. Every step is dangerous, every lock a test of your skill. Fail, and you’ll lose more than treasure—you’ll lose everything."
         "\n"
         "HOW TO PLAY:\n"
         " - Type commands and press Enter.\n"

@@ -30,6 +30,8 @@ void init_game_state(GameState *gs)
     gs->diary_deciphered           = 0;
     gs->knows_chest_code           = 0;
     gs->chest_unlocked             = 0;
+    gs->captain_riddle_solved      = 0; // Captain's riddle not solved initially
+    gs->captain_riddle_attempts    = 3; // 3 attempts for captain's riddle
 
     // Initialize timer
     gs->fridge_timer_active        = 0;

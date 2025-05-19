@@ -78,7 +78,9 @@ void handle_game_over(GameState* gs, const char* message, const char* art_key) {
 
 void handle_win_game(GameState* gs) {
     log_action(gs, "GAME_EVENT", "YOU HAVE FOUND THE TREASURE!");
-    display_ascii_art("WIN_GAME");
+    display_ascii_art("TREASURE_ART"); // Display the treasure ASCII art
+    SLEEP_MS(2000); // Add a delay after showing the treasure
+    display_ascii_art("WIN_GAME"); // Display the standard win message art
     gs->game_won = 1;
 }
 
@@ -126,6 +128,24 @@ void handle_move(GameState* gs, const char* direction_str) {
             log_action(gs, "GAME_INFO", "You use the Treasure Key. With a satisfying thunk, the heavy door unlatches!");
         }
 
+        // Captain's Riddle for Prison Hold Access
+        if (next_room_id == ROOM_PRISON_HOLD && gs->player.current_room_id == ROOM_CAPTAIN_QUARTERS) {
+            if (gs->captain_riddle_solved) {
+                // Riddle solved, allow movement
+                log_action(gs, "GAME_INFO", "The western door creaks open.");
+            } else if (gs->captain_riddle_attempts == 0) {
+                log_action(gs, "GAME_INFO", "The lock on the western door is unresponsive. You cannot open it.");
+                return; // Prevent movement
+            } else {
+                log_action(gs, "GAME_INFO", "The door to the west is locked. A small inscription reads:\n"
+                    "\"Silent servant by my side,\nThrough roiled seas and turning tide,\nWith face unblinking, ever true,\nIt guides my hand when night is blue.\"");
+                gs->special_prompt_active = 1;
+                strcpy(gs->special_prompt_context, "CAPTAIN_RIDDLE_ANSWER");
+                log_action(gs, "PROMPT", "What is the answer? > ");
+                return; // Prevent movement
+            }
+        }
+
         // Handle fridge timer
         if (next_room_id == ROOM_FRIDGE) {
             gs->fridge_timer_active = 1;
@@ -151,6 +171,39 @@ void handle_move(GameState* gs, const char* direction_str) {
                     printf("%s", line);
                 }
                 fclose(galley_file);
+                printf("\n"); // Add a newline after the ASCII art
+            }
+        }
+
+        // Display Parrot and Sword ASCII art if entering the Deck
+        if (next_room_id == ROOM_DECK) {
+            display_deck_art(gs);
+        }
+
+        // Display Prisoner Room ASCII art if entering the Prison Hold
+        if (next_room_id == ROOM_PRISON_HOLD) {
+            FILE* prisoner_room_file = fopen("ascii/prisoner_room.txt", "r");
+            if (prisoner_room_file) {
+                char line[MAX_LINE_LENGTH];
+                printf("\n"); // Add a newline before the ASCII art
+                while (fgets(line, sizeof(line), prisoner_room_file)) {
+                    printf("%s", line); // fgets keeps the newline
+                }
+                fclose(prisoner_room_file);
+                printf("\n"); // Add a newline after the ASCII art
+            }
+        }
+
+        // Display Captain's Room ASCII art if entering the Captain's Quarters
+        if (next_room_id == ROOM_CAPTAIN_QUARTERS) {
+            FILE* captain_room_file = fopen("ascii/captain_room.txt", "r");
+            if (captain_room_file) {
+                char line[MAX_LINE_LENGTH];
+                printf("\n"); // Add a newline before the ASCII art
+                while (fgets(line, sizeof(line), captain_room_file)) {
+                    printf("%s", line); // fgets keeps the newline
+                }
+                fclose(captain_room_file);
                 printf("\n"); // Add a newline after the ASCII art
             }
         }
@@ -460,6 +513,52 @@ void handle_open_chest(GameState* gs) {
     strcpy(gs->special_prompt_context, "CHEST_CODE_ENTRY");
 }
 
+// Helper function to display Deck-specific ASCII art
+void display_deck_art(GameState* gs) {
+    // This is the existing logic for displaying parrot and sword ASCII art
+    char parrot_lines[20][MAX_LINE_LENGTH];
+    char sword_lines[20][MAX_LINE_LENGTH];
+    int parrot_height = 0;
+    int sword_height = 0;
+    int max_height = 0;
+    FILE* parrot_file = fopen("ascii/parrot.txt", "r");
+    FILE* sword_file = fopen("ascii/sword.txt", "r");
+
+    if (parrot_file) {
+        while (parrot_height < 20 && fgets(parrot_lines[parrot_height], MAX_LINE_LENGTH, parrot_file)) {
+            parrot_lines[parrot_height][strcspn(parrot_lines[parrot_height], "\n")] = 0; // Remove newline
+            parrot_height++;
+        }
+        fclose(parrot_file);
+    }
+
+    if (sword_file) {
+        while (sword_height < 20 && fgets(sword_lines[sword_height], MAX_LINE_LENGTH, sword_file)) {
+            sword_lines[sword_height][strcspn(sword_lines[sword_height], "\n")] = 0; // Remove newline
+            sword_height++;
+        }
+        fclose(sword_file);
+    }
+
+    max_height = (parrot_height > sword_height) ? parrot_height : sword_height;
+
+    if (parrot_height > 0 || sword_height > 0) {
+        printf("\n"); // Add a newline before the ASCII art
+        for (int i = 0; i < max_height; ++i) {
+            if (i < parrot_height) {
+                printf("%-30s", parrot_lines[i]); // Print parrot line, padded to 30 chars
+            } else {
+                printf("%-30s", ""); // Pad with spaces
+            }
+            printf("     "); // 5 spaces between arts
+            if (i < sword_height) {
+                printf("%s", sword_lines[i]);  // Print sword line
+            }
+            printf("\n");
+        }
+        printf("\n"); // Add a newline after the ASCII art
+    }
+}
 
 // --- Special Input Processing ---
 void process_special_input(GameState* gs, const char* raw_input) {
@@ -557,11 +656,30 @@ void process_special_input(GameState* gs, const char* raw_input) {
             gs->special_prompt_active = 0;
         }
     }
+    else if (strcmp(gs->special_prompt_context, "CAPTAIN_RIDDLE_ANSWER") == 0) {
+        char riddle_answer_buffer[MAX_LINE_LENGTH];
+        if (strcmp(input, "compass") == 0) {
+            log_action(gs, "GAME_EVENT", "Correct! You hear a faint click from the western door.");
+            gs->captain_riddle_solved = 1;
+            gs->special_prompt_active = 0;
+        } else {
+            gs->captain_riddle_attempts--;
+            if (gs->captain_riddle_attempts > 0) {
+                sprintf(riddle_answer_buffer, "That's not it. The inscription remains. (%d attempts left for this riddle)", gs->captain_riddle_attempts);
+                log_action(gs, "GAME_EVENT", riddle_answer_buffer);
+                log_action(gs, "PROMPT", "What is the answer? > ");
+            } else {
+                log_action(gs, "GAME_EVENT", "You've tried too many times. The lock on the western door seems unresponsive now.");
+                gs->special_prompt_active = 0;
+            }
+        }
+    }
     else if (strcmp(gs->special_prompt_context, "INTRO_CONTINUE") == 0) {
         if (strcmp(input, "continue") == 0) {
             log_action(gs, "ACTION", "You decide to board the galleon...");
             run_animation(SWING_ANIMATION_FILENAME, gs); // Animation filename from common.h
             gs->player.current_room_id = ROOM_DECK;
+            display_deck_art(gs); // Display Deck art on initial entry
             show_room_description(gs);
             gs->special_prompt_active = 0;
         } else {
@@ -584,7 +702,7 @@ void restart_game_flow(GameState* gs) {
     display_help_message(gs); // Show how to play
 
     // Then, the story intro
-    log_action(gs, "STORY", "You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...");
+    log_action(gs, "STORY", "You are adrift in a small, rickety boat... The Crimson Serpent is getting closer and closer. This might be your only chance to get your much needed gold...");
     log_action(gs, "PROMPT", "Type 'continue' to board the ship. > ");
     gs->special_prompt_active = 1;
     strcpy(gs->special_prompt_context, "INTRO_CONTINUE");

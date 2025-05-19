@@ -24,6 +24,8 @@ struct GameState {
     int diary_deciphered;
     int knows_chest_code;
     int chest_unlocked;
+    int captain_riddle_solved; // New flag for captain's riddle
+    int captain_riddle_attempts; // New counter for captain's riddle attempts
 
     int special_prompt_active; // If true, input goes to special handler
     char special_prompt_context[MAX_LINE_LENGTH]; // Context for special input

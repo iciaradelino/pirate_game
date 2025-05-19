@@ -18,5 +18,6 @@ void handle_win_game(GameState* gs);
 void restart_game_flow(GameState* gs);
 void handle_hint(GameState* gs);
 void check_fridge_timer(GameState* gs);
+void display_deck_art(GameState* gs); // For deck specific ASCII art
 
 #endif // GAME_LOGIC_H

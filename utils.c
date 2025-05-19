@@ -111,7 +111,7 @@ void display_map(GameState* gs) {
 void display_help_message(GameState* gs) {
     const char* help_text =
         "----------------------------------------------------------------------\n"
-        "Welcome to The Buccaneer\'s Cipher!\n"
+        "Welcome to Stowaway!\n"
         "Your goal is to explore the pirate ship, solve puzzles, and find the treasure.\n"
         "\n"
         "HOW TO PLAY:\n"

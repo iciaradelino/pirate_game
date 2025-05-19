@@ -628,7 +628,7 @@ void restart_game_flow(GameState* gs) {
     display_help_message(gs); // Show how to play
 
     // Then, the story intro
-    log_action(gs, "STORY", "You are adrift in a small, rickety boat... A towering pirate galleon looms nearby. This might be your only chance...");
+    log_action(gs, "STORY", "You are adrift in a small, rickety boat... The Crimson Serpent comes closer and closer. This might be your only chance to get the gold...");
     log_action(gs, "PROMPT", "Type 'continue' to board the ship. > ");
     gs->special_prompt_active = 1;
     strcpy(gs->special_prompt_context, "INTRO_CONTINUE");

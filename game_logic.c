@@ -65,8 +65,13 @@ void show_room_description(GameState* gs) {
 
 // --- Game Over / Win ---
 void handle_game_over(GameState* gs, const char* message, const char* art_key) {
-    log_action(gs, "GAME_EVENT", message);
-    if (art_key) display_ascii_art(art_key);
+    if (message && strlen(message) > 0) {
+        log_action(gs, "GAME_EVENT", message);
+    }
+    if (art_key) {
+        display_ascii_art(art_key);
+        SLEEP_MS(2000);
+    }
     gs->game_over = 1;
     gs->should_restart = 1;
 }
@@ -104,7 +109,13 @@ void handle_move(GameState* gs, const char* direction_str) {
             }
         }
         if (next_room_id == ROOM_CAPTAIN_QUARTERS && player_has_item(&gs->player, ITEM_PARROT)) {
-            handle_game_over(gs, "The parrot suddenly squawks loudly, 'Intruder! Intruder!' The sleeping Captain jolts awake and shoots you!", "GAME_OVER_CAPTAIN");
+            log_action(gs, "GAME_EVENT", "The parrot suddenly squawks loudly, 'Intruder! Intruder!'");
+            SLEEP_MS(2000);
+            log_action(gs, "GAME_EVENT", "The sleeping Captain jolts awake and shoots you!");
+            SLEEP_MS(2000);
+            log_action(gs, "GAME_EVENT", "The Captain was not pleased to be woken by a squawking parrot! BANG!");
+            SLEEP_MS(2000);
+            handle_game_over(gs, "", "GAME_OVER_CAPTAIN");
             return;
         }
         if (next_room_id == ROOM_TREASURE_ROOM && !player_has_item(&gs->player, ITEM_TREASURE_KEY)) {
@@ -118,6 +129,20 @@ void handle_move(GameState* gs, const char* direction_str) {
         gs->player.current_room_id = next_room_id;
         // gs->rooms[next_room_id].visited = 0; // Reset visited if you want full description always on entry
         display_map(gs); // Display map before room description
+
+        // Display galley ASCII art if entering the galley
+        if (next_room_id == ROOM_GALLEY) {
+            FILE* galley_file = fopen("ascii/galley.txt", "r");
+            if (galley_file) {
+                char line[MAX_LINE_LENGTH];
+                while (fgets(line, sizeof(line), galley_file)) {
+                    printf("%s", line);
+                }
+                fclose(galley_file);
+                printf("\n"); // Add a newline after the ASCII art
+            }
+        }
+
         show_room_description(gs);
 
         // Post-entry events

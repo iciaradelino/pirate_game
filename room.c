@@ -54,7 +54,7 @@ void init_rooms(GameState* gs) { // Signature changed
 
     // ROOM_GALLEY
     gs->rooms[ROOM_GALLEY] = (Room){ROOM_GALLEY, "The Galley",
-        "The cramped galley smells of stale food and potent rum. A grumpy-looking Cook stirs a bubbling pot, eyeing you suspiciously. A door [North] seems to lead to the Captain\'s private area, another door [South] likely goes to a storage pantry, and the way [West] returns to the Deck.",
+        "The cramped galley smells of stale food and potent rum. A grumpy-looking Cook stirs a bubbling pot, eyeing you suspiciously. A door [North] seems to lead to the Captain\'s private area, another door [South] likely goes to a fridge, and the way [West] returns to the Deck.",
         {ROOM_CAPTAIN_QUARTERS, ROOM_FRIDGE, NUM_ROOMS, ROOM_DECK},
         {ITEM_NONE}, 0, 0
     };

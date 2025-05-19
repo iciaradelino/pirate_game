@@ -49,7 +49,7 @@ The player starts adrift and must board a pirate ship. The goal is to find the C
 - `help` (displays command list)
 - `map` (displays the game map from `map.txt`)
 - `hint` (provides a context-sensitive hint)
-- `guide` (attempts to open `game_guide.txt`)
+- `guide` (attempts to open `game_guide.txt`, only working for mac)
 - `quit`
 
 ## Compilation instructions

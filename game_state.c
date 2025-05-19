@@ -31,6 +31,10 @@ void init_game_state(GameState *gs)
     gs->knows_chest_code           = 0;
     gs->chest_unlocked             = 0;
 
+    // Initialize timer
+    gs->fridge_timer_active        = 0;
+    gs->fridge_entry_time          = 0;
+
     // Initialize special prompt state
     gs->special_prompt_active      = 0;
     gs->special_prompt_context[0]  = '\0';

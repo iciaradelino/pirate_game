@@ -60,7 +60,11 @@ int main(void)
         }
         else
         {
-            continue_game = process_player_input(&gs);
+            // Check fridge timer before processing player input
+            check_fridge_timer(&gs);
+            if (!gs.game_over) {  // Only process input if game isn't over from timer
+                continue_game = process_player_input(&gs);
+            }
         }
 
         if (!continue_game)

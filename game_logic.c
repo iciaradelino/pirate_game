@@ -104,7 +104,7 @@ void handle_move(GameState* gs, const char* direction_str) {
                 log_action(gs, "GAME_INFO", "The Cook blocks your path north. 'Not until ye fetch me ingredients, matey! I need some [Salted Pork], [Hardtack Biscuits], and a [Grog Bottle] for the Captain\'s stew.'");
                 return;
             } else { // Cook IS pleased, and player is moving North
-                log_action(gs, "GAME_INFO", "The Cook nods as you pass. 'The stew was fine. Go on about yer business.'");
+                log_action(gs, "GAME_INFO", "The Cook nods as you pass. 'The stew was fine. Go on about yer business, but shhh, the Captain sleeps.'");
                 // No return here, allow movement
             }
         }
@@ -126,9 +126,21 @@ void handle_move(GameState* gs, const char* direction_str) {
             log_action(gs, "GAME_INFO", "You use the Treasure Key. With a satisfying thunk, the heavy door unlatches!");
         }
 
+        // Handle fridge timer
+        if (next_room_id == ROOM_FRIDGE) {
+            gs->fridge_timer_active = 1;
+            gs->fridge_entry_time = time(NULL);
+            log_action(gs, "GAME_INFO", "The fridge door creaks open. You feel a chill... and a sense of urgency. You have 30 seconds to gather what you need!");
+        } else if (gs->player.current_room_id == ROOM_FRIDGE) {
+            gs->fridge_timer_active = 0;
+        }
+
         gs->player.current_room_id = next_room_id;
-        // gs->rooms[next_room_id].visited = 0; // Reset visited if you want full description always on entry
-        display_map(gs); // Display map before room description
+        
+        // Only show map if not entering treasure room
+        if (next_room_id != ROOM_TREASURE_ROOM) {
+            display_map(gs); // Display map before room description
+        }
 
         // Display galley ASCII art if entering the galley
         if (next_room_id == ROOM_GALLEY) {
@@ -140,6 +152,22 @@ void handle_move(GameState* gs, const char* direction_str) {
                 }
                 fclose(galley_file);
                 printf("\n"); // Add a newline after the ASCII art
+            }
+        }
+
+        // Display door opening animation if entering treasure room
+        if (next_room_id == ROOM_TREASURE_ROOM) {
+            FILE* door_file = fopen("ascii/door_opening.txt", "r");
+            if (door_file) {
+                char line[MAX_LINE_LENGTH];
+                while (fgets(line, sizeof(line), door_file)) {
+                    printf("%s", line);
+                    if (strcmp(line, "\n") == 0) {
+                        SLEEP_MS(500); // Add delay between frames
+                    }
+                }
+                fclose(door_file);
+                printf("\n"); // Add a newline after the animation
             }
         }
 
@@ -156,6 +184,22 @@ void handle_move(GameState* gs, const char* direction_str) {
         }
     } else {
         log_action(gs, "GAME_ERROR", "You can't go that way.");
+    }
+}
+
+// Add new function to check fridge timer
+void check_fridge_timer(GameState* gs) {
+    if (gs->fridge_timer_active) {
+        time_t current_time = time(NULL);
+        double elapsed_time = difftime(current_time, gs->fridge_entry_time);
+        
+        if (elapsed_time >= FRIDGE_TIME_LIMIT) {
+            log_action(gs, "GAME_EVENT", "The cold becomes unbearable...");
+            SLEEP_MS(2000);
+            log_action(gs, "GAME_EVENT", "You've spent too long in the freezing fridge!");
+            SLEEP_MS(2000);
+            handle_game_over(gs, "You succumb to hypothermia in the freezing storage room.", "GAME_OVER_FRIDGE");
+        }
     }
 }
 
@@ -312,7 +356,7 @@ void handle_use_cook(GameState* gs) {
 void handle_use_sword_for_prisoners(GameState* gs) {
     if (!player_has_item(&gs->player, ITEM_SWORD)) {
         log_action(gs, "GAME_ERROR", "You fumble for a sword you don't have!"); // Should not happen if logic is right
-        handle_game_over(gs, "Without a weapon to defend yourself, the prisoners overwhelm you.", "GAME_OVER_PRISONERS");
+        handle_game_over(gs, "Without a weapon to defend yourself, the prisoners manage to pin you down.", "GAME_OVER_PRISONERS");
         return;
     }
     log_action(gs, "ACTION", "You draw your sword, its polished steel gleaming in the dim light.");

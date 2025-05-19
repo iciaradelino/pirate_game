@@ -72,16 +72,16 @@ void init_rooms(GameState* gs) { // Signature changed
 
     // ROOM_CAPTAIN_QUARTERS
     gs->rooms[ROOM_CAPTAIN_QUARTERS] = (Room){ROOM_CAPTAIN_QUARTERS, "Captain\'s Quarters",
-        "A surprisingly lavishly decorated cabin. A large Captain figure lies snoring loudly on a rug. A grand desk holds a leather-bound [Diary]. A sturdy, locked [Chest] sits in the corner. A barred door [East] suggests a [Prison Hold], while the exit [South] leads back to the Galley. A heavy door to the [North] is probably the way to the [Treasure Room], but it\'s securely locked.",
-        {ROOM_TREASURE_ROOM, ROOM_GALLEY, ROOM_PRISON_HOLD, NUM_ROOMS},
+        "A surprisingly lavishly decorated cabin. A large Captain figure lies snoring loudly on a rug. A grand desk holds a leather-bound [Diary]. A sturdy, locked [Chest] sits in the corner. A barred door [West] suggests a [Prison Hold], while the exit [South] leads back to the Galley. A heavy door to the [North] is probably the way to the [Treasure Room], but it\'s securely locked.",
+        {ROOM_TREASURE_ROOM, ROOM_GALLEY, NUM_ROOMS, ROOM_PRISON_HOLD},
         {ITEM_NONE}, 0, 0
     };
     add_item_to_room(&gs->rooms[ROOM_CAPTAIN_QUARTERS], ITEM_DIARY);
 
     // ROOM_PRISON_HOLD
     gs->rooms[ROOM_PRISON_HOLD] = (Room){ROOM_PRISON_HOLD, "Prison Hold",
-        "A dark, damp, and altogether unpleasant hold. Three shadowy Prisoners look up as you enter, their eyes glinting in the gloom. The only way out seems to be [West] back to the Captain\'s Quarters.",
-        {NUM_ROOMS, NUM_ROOMS, NUM_ROOMS, ROOM_CAPTAIN_QUARTERS},
+        "A dark, damp, and altogether unpleasant hold. Three shadowy Prisoners look up as you enter, their eyes glinting in the gloom. The only way out seems to be [East] back to the Captain\'s Quarters.",
+        {NUM_ROOMS, NUM_ROOMS, ROOM_CAPTAIN_QUARTERS, NUM_ROOMS},
         {ITEM_NONE}, 0, 0
     };
 

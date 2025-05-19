@@ -5,6 +5,9 @@
 #include "room.h"   // Needs Room definition
 #include "item.h"   // Needs Item definition
 #include "common.h" // For MAX_LINE_LENGTH and FILE*
+#include <time.h>
+
+#define FRIDGE_TIME_LIMIT 30 // 30 seconds time limit for the fridge
 
 struct GameState {
     Player player;
@@ -30,6 +33,10 @@ struct GameState {
     Item items[MAX_ITEMS];
 
     FILE* log_file;
+
+    // Timer for fridge room
+    time_t fridge_entry_time;
+    int fridge_timer_active;
 };
 
 // Function prototypes

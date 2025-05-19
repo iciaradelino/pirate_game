@@ -17,5 +17,6 @@ void handle_game_over(GameState* gs, const char* message, const char* art_key);
 void handle_win_game(GameState* gs);
 void restart_game_flow(GameState* gs);
 void handle_hint(GameState* gs);
+void check_fridge_timer(GameState* gs);
 
 #endif // GAME_LOGIC_H

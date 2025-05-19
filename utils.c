@@ -3,26 +3,39 @@
 #include "game_state.h" // Needs full GameState definition for gs->log_file
 #include <unistd.h> // For getcwd
 
-// Function to get absolute path based on current working directory
+// Function to get absolute path based on executable's directory
 char* get_absolute_path(const char* relative_path) {
     static char abs_path[PATH_MAX]; // Use static buffer to avoid heap allocation
+    static char exe_dir[PATH_MAX] = {0}; // Cache for executable directory
+    static int first_run = 1; // Flag for first run checks
     
-    // Hardcode the base project directory to ensure resources are found regardless of where
-    // the executable is run from
-    const char* project_dir = "/Users/inventure71/VSProjects/pirate_game";
+    // Only determine the executable directory once
+    if (exe_dir[0] == '\0') {
+        // Get current working directory
+        if (getcwd(exe_dir, PATH_MAX) == NULL) {
+            perror("getcwd");
+            strcpy(exe_dir, "."); // Fallback to current directory
+        }
+        
+        printf("DEBUG: Game running from directory: %s\n", exe_dir);
+    }
     
-    // Construct absolute path: project_dir + "/" + relative_path
-    snprintf(abs_path, PATH_MAX, "%s/%s", project_dir, relative_path);
+    // Construct absolute path: exe_dir + "/" + relative_path
+    snprintf(abs_path, PATH_MAX, "%s/%s", exe_dir, relative_path);
     
-    // Debug: Check if directory exists
-    char dir_check[PATH_MAX];
-    snprintf(dir_check, PATH_MAX, "%s/ascii", project_dir);
-    FILE* test = fopen(dir_check, "r");
-    if (!test) {
-        printf("DEBUG: Directory %s does not exist or cannot be accessed\n", dir_check);
-    } else {
-        fclose(test);
-        printf("DEBUG: Directory %s exists and is accessible\n", dir_check);
+    // On first run, check if critical directories exist
+    if (first_run) {
+        char dir_check[PATH_MAX];
+        snprintf(dir_check, PATH_MAX, "%s/ascii", exe_dir);
+        FILE* test = fopen(dir_check, "r");
+        if (!test) {
+            printf("WARNING: Directory %s does not exist or cannot be accessed.\n", dir_check);
+            printf("Make sure game assets are in the correct location relative to the executable.\n");
+        } else {
+            fclose(test);
+            printf("DEBUG: Directory %s exists and is accessible\n", dir_check);
+        }
+        first_run = 0;
     }
     
     return abs_path;

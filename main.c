@@ -15,11 +15,12 @@ static int  execute_command         (GameState *gs, const char *command, const c
 
 static FILE *open_log_file_checked(const char *filename)
 {
-    FILE *file = fopen(filename, "a");
+    char *abs_path = get_absolute_path(filename);
+    FILE *file = fopen(abs_path, "a");
     if (!file)
     {
         perror("Error opening log file");
-        printf("Warning: Could not open log file %s. Game will continue without logging.\n", filename);
+        printf("Warning: Could not open log file %s. Game will continue without logging.\n", abs_path);
     }
     return file;
 }

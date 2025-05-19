@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-WELCOME TO THE BUCCANEER'S CIPHER!
+WELCOME TO STOWAWAY!
 ----------------------------------------------------------------------
 
 Your goal is to explore the pirate ship, solve puzzles, and find the treasure.

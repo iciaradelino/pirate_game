@@ -13,16 +13,24 @@ dist/%.o: %.c | dist
 	$(CC) $(CFLAGS) -c $< -o $@
 
 dist:
+ifeq ($(OS),Windows_NT)
+	cmd /c (if not exist dist mkdir dist) && (if not exist dist\ascii mkdir dist\ascii)
+else
 	mkdir -p dist/ascii
+endif
 
 copy_resources: | dist
+ifeq ($(OS),Windows_NT)
+	cmd /c xcopy /E /I /Y ascii dist\ascii
+else
 	cp -r ascii/* dist/ascii/
+endif
 
 clean:
 ifeq ($(OS),Windows_NT)
-	cmd /c del /F /Q dist\\*.o dist\\pirate_adventure dist\\game_log.txt
+	cmd /c if exist dist rd /S /Q dist
 else
-	rm -f dist/*.o dist/pirate_adventure dist/game_log.txt
+	rm -rf dist
 endif
 
 .PHONY: all clean
